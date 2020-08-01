@@ -33,6 +33,10 @@ Route::post('/editsales','Sales\SalesController@editsales')->name('editsales');
 Route::post('/updatebuy','Buy\BuyController@updatebuy')->name('updatebuy');
 Route::get('/displaydaliysales','Sales\SalesController@displaydaily')->name('displaydailysales');
 Route::post('/displaysales','Sales\SalesController@display')->name('displaysales');
+//dealers
+Route::get('/dealers/buy','Dealers\DealersController@buyform')->name('newquantity');
+Route::post('/dealers/buy','Dealers\DealersController@store')->name('storequantity');
+
 
 
 

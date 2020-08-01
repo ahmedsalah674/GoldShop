@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDaysTable extends Migration
+class CreateDealersQuentityPremiumTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateDaysTable extends Migration
      */
     public function up()
     {
-        Schema::create('days', function (Blueprint $table) {
+        Schema::create('dealers_quentity_premium', function (Blueprint $table) {
             $table->id();
-            $table->decimal('sales');
-            $table->decimal('buys');
-            $table->decimal('stay');
-            $table->decimal('total');
+            $table->integer('quantity_id');
+            $table->decimal('premium_price');
+            $table->decimal('premium_gold');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateDaysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('days');
+        Schema::dropIfExists('dealers_quentity_premium');
     }
 }

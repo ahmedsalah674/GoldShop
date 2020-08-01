@@ -2,6 +2,7 @@
 @section('title','بيع ')
 @section('content_header')
   <h1><i class="fas fa-plus fa-sm text-info"></i> تسجيل عملية البيع</h1>
+  @include('message')
 @endsection
 @section('content') 
 <form class="col-md-6" action="{!!route('salesform')!!}"  enctype="multipart/form-data" method="POST">

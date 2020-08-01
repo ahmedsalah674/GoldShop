@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Buy;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Dealing;
+use Carbon\Carbon;
 class BuyController extends Controller
 {
    public function displaydaily()
    {
-      $now=\Carbon\Carbon::now()->format('m-d-Y');
+      // $now=Carbon\Carbon::now()->format('m-d-Y');
      // dd($now);
-     $buys=Dealing::where('role',1)->where('day',$now)->paginate(10);
+     $buys=Dealing::where('role',1)->whereDate('created_at', Carbon::now()->format('Y-m-d'))->paginate(10);
    //   dd($buys);
      return view('Buys.displaydailybuy',compact('buys'));
    }

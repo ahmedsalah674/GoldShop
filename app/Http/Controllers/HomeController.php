@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Day ;
 class HomeController extends Controller
 {
     /**
@@ -23,6 +23,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $now=\Carbon\Carbon::now()->format('m-d-Y');
+        
+        $day=Day::where('day',$now)->first();
+        // return $day;
+        if(!$day)
+        {
+            $day=Day::create([
+                'day' => $now,
+                'sales'=>0,
+                'buys'=>0,
+                'stay'=>0,
+                'total'=>0,
+            ]);}
+        return view('home',compact('day'));
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Dealing;
+use Carbon\Carbon;
 class SalesController extends Controller
 {
    public function display(Request $request)
@@ -14,9 +15,10 @@ class SalesController extends Controller
     }
    public function displaydaily()
     {
-       $now=\Carbon\Carbon::now()->format('m-d-Y');
+      //  $now=\Carbon\;
       // dd($now);
-      $sales=Dealing::where('role',0)->where('day',$now)->paginate(10);
+      $sales=Dealing::where('role',0)->whereDate('created_at', Carbon::now()->format('Y-m-d'))->paginate(10);
+      // dd ($sales);
       return view('Sales.displaydailysales',compact('sales'));
     }
     public function salesform()
@@ -25,9 +27,8 @@ class SalesController extends Controller
     }
     public function storesales(Request $request)
     {
-      $now=\Carbon\Carbon::now()->format('m-d-Y');
+      // $now=\Carbon\Carbon::now()->format('m-d-Y');
       // dd($now-1);
-
       Dealing::create([
         'name' => $request->name,
         'tel' => $request->tel,
@@ -36,11 +37,12 @@ class SalesController extends Controller
         'price' => $request->price,
         'type' => $request->type,
         'typetitle' => $request->typetitle,
-        'day'=>$now,
+      //   'day'=>$now,
         'role' => 0,
       ]);
        return redirect()->back()->with('message','تم تسجيل العملية ');
     }
+    
     public function editsales(Request $request)
     {
        $sale=Dealing::find($request->id);

@@ -243,7 +243,7 @@ return [
                 [
                     'text' => 'كمية جديدة',
                     'icon' => 'fas fa-fw fa-check',
-                    'url'=> '',
+                    'url'=> '/dealers/buy',
                 ], 
             ],//end of dealers
         ],//end sub menu
