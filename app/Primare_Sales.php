@@ -10,4 +10,9 @@ class Primare_Sales extends Model
    protected $fillable = [
        'dealing_id','primare_sale',
    ];
+   public function sale()
+    { 
+        return $this->belongsTo('App\Dealing');
+    }
+
 }

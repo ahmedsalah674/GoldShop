@@ -43,16 +43,14 @@
           <td>{{$sale->created_at}}</td>
 
           <td>
-            <form action="{!!route('display.sales')!!}" method="POST" class="d-inline">
-              @csrf
-              <input type="hidden" name="id" value="{{$sale->id}}">
-              <button type="submit" class="btn btn-success btn-sm">عرض</button>
-            </form>
+          <a href="{!!route('display.sales',$sale->id)!!}"class="btn btn-success btn-sm" >عرض</a>
+          @if(!($sale->type && $sale->finsh)|| !$sale->type)
           <form action="{!!route('edit.sales')!!}" method="POST" class="d-inline">
-              @csrf
-              <input type="hidden" name="id" value="{{$sale->id}}">
-              <button type="submit" class="btn btn-primary btn-sm">تعديل</button>
-            </form>
+            @csrf
+            <input type="hidden" name="id" value="{{$sale->id}}">
+            <button type="submit" class="btn btn-primary btn-sm">تعديل</button>
+          </form>
+          @endif
           </td>
         </tr>
       @endforeach

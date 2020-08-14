@@ -32,7 +32,7 @@ Route::post('/sales/form','Sales\SalesController@storesales')->name('store.sales
 Route::post('/edit/sales','Sales\SalesController@editsales')->name('edit.sales');
 Route::post('/update/sales','Sales\SalesController@updatesales')->name('update.sales');
 Route::get('/display/daliy/sales','Sales\SalesController@displaydaily')->name('display.daily.sales');
-Route::post('/display/sales','Sales\SalesController@display')->name('display.sales');
+Route::get('/display/sales/{id}','Sales\SalesController@display')->name('display.sales');
 //dealers
 Route::get('/dealers/buy','Dealers\DealersController@buyform')->name('new.quantity');
 Route::post('/dealers/buy','Dealers\DealersController@store')->name('store.quantity');
@@ -42,6 +42,7 @@ Route::post('/update/stay','HomeController@updatestay')->name('update.stay');
 
 //premiums
 Route::get('/premiums/page','Sales\SalesController@allpremiumspage')->name('premiums.page');
+Route::post('/premiums/add','Sales\SalesController@addPraimare')->name('premare.add');
 
 //
 Route::get('/test','HomeController@test')->name('test');

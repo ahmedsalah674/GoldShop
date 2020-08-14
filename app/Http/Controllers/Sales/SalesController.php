@@ -10,10 +10,11 @@ use App\primare_sales;
 use Carbon\Carbon;
 class SalesController extends Controller
 {
-   public function display(Request $request)
+   public function display($id)
     {
-      $sale=Dealing::find($request->id);
-       return view('Sales.display',compact('sale'));
+      $sale=Dealing::find($id);
+      $primares=$sale->primare;
+      return view('Sales.display',compact(['sale','primares']));
     }
 
    public function displaydaily(Request $request)
@@ -37,7 +38,7 @@ class SalesController extends Controller
 
     public function allpremiumspage()
     {
-      $sales=Dealing::where('type',1)->where('role',0)->paginate(10);
+      $sales=Dealing::where('type',1)->where('role',0)->where('finsh','0')->paginate(10);
       return view('Sales.displaypremiums',compact('sales'));
     }
 
@@ -65,6 +66,7 @@ class SalesController extends Controller
             'caliber' => $request->caliber,
             'price' => $request->price,
             'type' => $request->type,
+            'finsh'=> !$request->type,
             'typetitle' => $request->typetitle,
             'role' => 0,
           ]);
@@ -101,6 +103,26 @@ class SalesController extends Controller
       $day=Day::whereDate('created_at',carbon::now()->formate('Y-m-d'));
       return redirect()->route('display.daily.sales',$day)->with('message','لقد تم تعديل العملية');
     }
+    public function addPraimare(Request $request)
+    {
+      $day=Day::whereDate('created_at',carbon::now()->format('Y-m-d'))->first();
+      $sale=Dealing::find($request->dealing_id);
+      if (!$day)
+        return redirect()->route('home')->with('error','حدث خطأ اثناء التسجيل يرجي المحاولة مرة اخري');
+      else 
+      {
+       $day->sales+=$request->primare;
+       $day->total+=$request->primare;
+       $day->update(); 
+       $sale->finsh=1;
+       $sale->update;
+      }
+      $primare=Primare_Sales::create([
+        'dealing_id' => $request->dealing_id,
+        'primare_sale' => $request->primare,
+      ]);
     
+      return redirect()->back()->with('message','لقد تم اضافة القسط ');
+    }
     
 }

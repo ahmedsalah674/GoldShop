@@ -14,4 +14,8 @@ class Dealing extends Model
     {
         return $value.'g';
     }
+    public function primare()
+    { 
+        return $this->hasMany('App\Primare_Sales','dealing_id');
+    }
 }
