@@ -20,24 +20,32 @@ Auth::routes(['register'=>false]);
 Route::get('/',function(){return redirect()->route('home');});
 Route::get('/home','HomeController@index')->name('home');
 //Buy
-Route::get('/buyform','Buy\BuyController@buyform')->name('buyform');
-Route::post('/buyform','Buy\BuyController@storebuy')->name('storebuy');
-Route::get('/displaydailybuy','Buy\BuyController@displaydaily')->name('displaydailybuy');
-Route::post('/editbuy','Buy\BuyController@editbuy')->name('editbuy');
-Route::post('/updatebuy','Buy\BuyController@updatebuy')->name('updatebuy');
-Route::post('/displaybuy','Buy\BuyController@display')->name('displaybuy');
+Route::get('/buy/form','Buy\BuyController@buyform')->name('buy.form');
+Route::post('/buy/form','Buy\BuyController@storebuy')->name('store.buy');
+Route::get('/display/daily/buy','Buy\BuyController@displaydaily')->name('display.daily.buy');
+Route::post('/edit/buy','Buy\BuyController@editbuy')->name('edit.buy');
+Route::post('/update/buy','Buy\BuyController@updatebuy')->name('update.buy');
+Route::post('/display/buy','Buy\BuyController@display')->name('display.buy');
 //Sales
-Route::get('/salesform','Sales\SalesController@salesform')->name('salesform');
-Route::post('/salesform','Sales\SalesController@storesales')->name('storesales');
-Route::post('/editsales','Sales\SalesController@editsales')->name('editsales');
-Route::post('/updatebuy','Buy\BuyController@updatebuy')->name('updatebuy');
-Route::get('/displaydaliysales','Sales\SalesController@displaydaily')->name('displaydailysales');
-Route::post('/displaysales','Sales\SalesController@display')->name('displaysales');
+Route::get('/sales/form','Sales\SalesController@salesform')->name('sales.form');
+Route::post('/sales/form','Sales\SalesController@storesales')->name('store.sales');
+Route::post('/edit/sales','Sales\SalesController@editsales')->name('edit.sales');
+Route::post('/update/sales','Sales\SalesController@updatesales')->name('update.sales');
+Route::get('/display/daliy/sales','Sales\SalesController@displaydaily')->name('display.daily.sales');
+Route::post('/display/sales','Sales\SalesController@display')->name('display.sales');
 //dealers
-Route::get('/dealers/buy','Dealers\DealersController@buyform')->name('newquantity');
-Route::post('/dealers/buy','Dealers\DealersController@store')->name('storequantity');
+Route::get('/dealers/buy','Dealers\DealersController@buyform')->name('new.quantity');
+Route::post('/dealers/buy','Dealers\DealersController@store')->name('store.quantity');
 
+//days
+Route::post('/update/stay','HomeController@updatestay')->name('update.stay');
 
+//premiums
+Route::get('/premiums/page','Sales\SalesController@allpremiumspage')->name('premiums.page');
 
+//
+Route::get('/test','HomeController@test')->name('test');
+Route::post('/test','HomeController@test2')->name('test2');
+//
 
 

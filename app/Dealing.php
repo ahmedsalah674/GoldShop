@@ -10,4 +10,8 @@ class Dealing extends Model
     protected $fillable = [
         'name', 'tel', 'weight','caliber','price','type','typetitle','role','day'
     ];  
+    public function getWeightAttribute($value)
+    {
+        return $value.'g';
+    }
 }

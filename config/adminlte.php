@@ -202,17 +202,17 @@ return [
                 [
                     'text' => 'عملية جديدة',
                     'icon' => 'fas fa-fw fa-plus ',
-                    'url'  => 'salesform',
+                    'url'  => 'sales/form',
                 ],
                 [
-                    'text' => 'مبيعات اليوم',
+                    'text' => 'مبيعات يومية',
                     'icon'=>'far fa-clock',
-                    'url'  => 'displaydaliysales',
+                    'url'  => 'display/daliy/sales',
                 ],
                 [
                     'text' => 'الاقساط',
                     'icon' => 'far fa-handshake ',
-                    'url'=> 'displaydailybuy',
+                    'url'=> '/premiums/page',
                 ],
             ],//end of submenu
         ],//end of sales
@@ -225,12 +225,12 @@ return [
                 [
                     'text' => 'عملية جديدة',
                     'icon'=>'fas fa-fw fa-exclamation',
-                    'url'=> 'buyform',
+                    'url'=> 'buy/form',
                 ],
                 [
                     'text' => 'مشتريات اليوم',
                     'icon' => 'fas fa-fw fa-check',
-                    'url'=> 'displaydailybuy',
+                    'url'=> 'display/daily/buy',
                 ],
             ]//end of submenu
         ],//end of buys
@@ -246,6 +246,12 @@ return [
                     'url'=> '/dealers/buy',
                 ], 
             ],//end of dealers
+        ],//end sub menu
+
+        [
+            'text' => 'تجربة',
+                'icon'    => 'fas fa-fw fa-users my-2',
+                'url'=> '/test',
         ],//end sub menu
 
         

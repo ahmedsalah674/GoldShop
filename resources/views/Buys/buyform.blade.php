@@ -4,7 +4,7 @@
   <h1><i class="fas fa-plus fa-sm text-info"></i> عملية شراء جديدة</h1>
 @endsection
 @section('content') 
-<form class="col-md-6" action="{!!route('storebuy')!!}" method="POST"  enctype="multipart/form-data">
+<form class="col-md-6" action="{!!route('store.buy')!!}" method="POST"  enctype="multipart/form-data">
     @csrf
       <div class="form-group">
         <i class="fas fa-pencil-alt text-info"></i>

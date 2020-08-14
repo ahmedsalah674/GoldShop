@@ -4,7 +4,7 @@
   <h1><i class="fas fa-plus fa-sm text-info"></i> عملية بيع جديدة</h1>
 @endsection
 @section('content') 
-<form class="col-md-6" action=""  enctype="multipart/form-data">
+<form class="col-md-6" action="{!!route('update.sales')!!}"  enctype="multipart/form-data" method="POST">
     @csrf
       <div class="form-group">
         <i class="fas fa-pencil-alt text-info"></i>
@@ -61,6 +61,7 @@
           </select>    
          </div>
       <input type="hidden" name="role" value="0">
+      <input type="hidden" name="id" value="{{$sale->id}}">
       <div class="form-group">
         <button type="submit" style="width:100%"class="btn btn-primary"><i class="fas fa-plus"></i> تعديل عملية البيع </button>
       </div>

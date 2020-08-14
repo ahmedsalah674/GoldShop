@@ -1,9 +1,15 @@
 @extends('adminlte::page')
 @section('title','المبيعات')
 @section('content_header')
-  <h1>المبيعات اليومية</h1>
-  <h5 class="text-center">ما تم بيعه = 300</h5>
 @include('message')
+<h1>المبيعات يوم {{$date}}</h1>
+  <h5 class="text-center">ما تم بيعه = {{$day->sales}} </h5>
+ <div class="text-center">
+    <h5 class="d-inline m-5">قم بأختيار اليوم لعرض ما تم بيعه</h5>
+    <form class="d-inline m-5" id="form">
+    <input type="date"  name="date" id="datepicker" class="datepicker form-control w-25 d-inline" >
+    </form>
+  </div>
 @endsection
 @section('content')
 <input class="form-control mb-4 " id="productsTable" type="text"
@@ -37,12 +43,12 @@
           <td>{{$sale->created_at}}</td>
 
           <td>
-            <form action="{!!route('displaysales')!!}" method="POST" class="d-inline">
+            <form action="{!!route('display.sales')!!}" method="POST" class="d-inline">
               @csrf
               <input type="hidden" name="id" value="{{$sale->id}}">
               <button type="submit" class="btn btn-success btn-sm">عرض</button>
             </form>
-          <form action="{!!route('editsales')!!}" method="POST" class="d-inline">
+          <form action="{!!route('edit.sales')!!}" method="POST" class="d-inline">
               @csrf
               <input type="hidden" name="id" value="{{$sale->id}}">
               <button type="submit" class="btn btn-primary btn-sm">تعديل</button>
@@ -56,8 +62,16 @@
     <div class="  ">{{$sales->links()}}</div>
     </div>
 @endsection
-
+@section('css')
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+<style>
+  [type="date"]::-webkit-calendar-picker-indicator {
+    display: none;}
+</style>
+@endsection
  @section('js')
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script>$( ".datepicker" ).datepicker({format: 'yyyy-mm-dd',});</script>  
 <script>
   $(document).ready(function(){
     $("#productsTable").on("keyup", function() {
@@ -68,4 +82,10 @@
     });
   });
   </script>
+  <script>
+    $('#datepicker').on('change',function(){
+          $("#form").submit();
+      });
+  </script>
 @endsection 
+

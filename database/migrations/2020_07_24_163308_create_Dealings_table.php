@@ -23,7 +23,7 @@ class CreateDealingsTable extends Migration
             $table->integer('type');
             $table->string('typetitle');
             $table->integer('role');
-            // $table->integer('day_id');
+            $table->integer('finsh')->default(0);
             $table->timestamps();
         });
     }

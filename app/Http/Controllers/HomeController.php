@@ -23,9 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $now=\Carbon\Carbon::now()->format('m-d-Y');
-        
-        $day=Day::where('day',$now)->first();
+        $now=\Carbon\Carbon::now()->format('Y-m-d');
+        // return $now;
+        $day=Day::whereDate('created_at',$now)->first();
         // return $day;
         if(!$day)
         {
@@ -37,5 +37,31 @@ class HomeController extends Controller
                 'total'=>0,
             ]);}
         return view('home',compact('day'));
+    }
+    public function updatestay(Request $request)
+    {
+        // dd($request);
+        $now=\Carbon\Carbon::now()->format('Y-m-d');
+        $day=Day::whereDate('created_at',$now)->first();
+        // return $day;
+        if($day)
+        {
+            $day->total-=$day->stay;
+            $day->stay=$request->stay;
+            $day->total+=$request->stay;
+            $day->update();
+            return redirect()->route('home');
+        }
+        else
+            return redirect()->route('home')->with('error','حدث خطأ اثناء التعديل ارجوا المحاولة مرة اخرى');
+    }
+
+    public function test()
+    {
+        return view('test');
+    }
+    public function test2(Request $request)
+    {
+        dd($request);
     }
 }

@@ -36,7 +36,7 @@
     </tr>
   </tbody>
 </table>
-<form action="{!!route('editsales')!!}" method="POST">
+<form action="{!!route('edit.sales')!!}" method="POST">
     @csrf
     <input type="hidden" name="id" value="{{$sale->id}}">
     <button type="submit"  class="btn btn-info col-md-6 ml-5">تعديل</a>

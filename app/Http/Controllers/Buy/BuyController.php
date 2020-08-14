@@ -22,7 +22,7 @@ class BuyController extends Controller
     }
     public function storebuy(Request $request)
     {
-      $now=\Carbon\Carbon::now()->format('m-d-Y');
+      $now=\Carbon\Carbon::now()->format('Y-m-d');
       Dealing::create([
          'name' => $request->name,
          'tel' => $request->tel,
@@ -31,10 +31,17 @@ class BuyController extends Controller
          'price' => $request->price,
          'type' => 0,
          'typetitle' => $request->typetitle,
-         'day'=>$now,
          'role' => 1,
        ]);
-        return redirect()->route('home');
+       $day=Day::whereDate('created_at',$now)->first();
+       if($day)
+       {
+          $day->buy+=$request->price;
+          $day->total-=$request->price;
+          $day->update();
+          return redirect()->back()->with('message','تم تسجيل العملية');
+       }
+        return redirect()->route('home')->with('error','حدث خطأ اثناء عملية التسجبل يرجى المحاولة مرة اخرى');
     }
     public function display(Request $request)
     {
