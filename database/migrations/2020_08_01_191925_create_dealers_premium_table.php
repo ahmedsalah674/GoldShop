@@ -13,11 +13,11 @@ class CreateDealersQuentityPremiumTable extends Migration
      */
     public function up()
     {
-        Schema::create('dealers_quentity_premium', function (Blueprint $table) {
+        Schema::create('dealers_premium', function (Blueprint $table) {
             $table->id();
-            $table->integer('quantity_id');
-            $table->decimal('premium_price');
-            $table->decimal('premium_gold');
+            $table->integer('dealer_id');
+            $table->decimal('premium_price')->nullable();
+            $table->decimal('premium_gold')->nullable();
             $table->timestamps();
         });
     }

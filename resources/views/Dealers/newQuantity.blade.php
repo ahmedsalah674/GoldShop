@@ -4,12 +4,17 @@
   <h1><i class="fas fa-plus fa-sm text-info"></i> كمية جديدة</h1>
 @endsection
 @section('content') 
-<form class="col-md-6" action="{!!route('storebuy')!!}" method="POST"  enctype="multipart/form-data">
+<form class="col-md-6" action="{!!route('store.quantity')!!}" method="POST"  enctype="multipart/form-data">
     @csrf
       <div class="form-group">
         <i class="fas fa-pencil-alt text-info"></i>
         <label>اسم التاجر</label>
-        <input type="text" class="form-control" name="name"placeholder=" اسم التاجر" value="{{ old('name') }}" required>
+        <select class="form-control select2 " id="item_picker" name="dealer_id">
+          <option disabled selected >اسم التاجر</option>
+          @foreach ($dealers as $dealer)
+            <option value="{{ $dealer->id }}">{{ $dealer->name }}</option>
+          @endforeach
+        </select>
       </div>
       <div class="form-group">
         <i class="fas fa-pencil-alt text-info"></i>
@@ -41,3 +46,20 @@
       </div>
   </form>
 @endsection
+@section('css')
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+@section('js')
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+  <script>$(".select2").select2({placeholder:"Choose product",theme: "classic"});</script>
+  <script>
+    $(document).ready(function(){
+      $("#productsTable").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#productsTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+  </script>
+@endsection 

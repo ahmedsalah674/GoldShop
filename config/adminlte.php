@@ -245,6 +245,11 @@ return [
                     'icon' => 'fas fa-fw fa-check',
                     'url'=> '/dealers/buy',
                 ], 
+                [
+                    'text' => 'جميع التجار',
+                    'icon' => 'fas fa-fw fa-users my-2',
+                    'url'=> '/dealers/all',
+                ],
             ],//end of dealers
         ],//end sub menu
 

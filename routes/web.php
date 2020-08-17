@@ -34,8 +34,16 @@ Route::post('/update/sales','Sales\SalesController@updatesales')->name('update.s
 Route::get('/display/daliy/sales','Sales\SalesController@displaydaily')->name('display.daily.sales');
 Route::get('/display/sales/{id}','Sales\SalesController@display')->name('display.sales');
 //dealers
-Route::get('/dealers/buy','Dealers\DealersController@buyform')->name('new.quantity');
-Route::post('/dealers/buy','Dealers\DealersController@store')->name('store.quantity');
+Route::get('/dealers/buy','Dealers\DealersController@newQuantity')->name('new.quantity');
+Route::post('/dealers/buy','Dealers\DealersController@storeQuantity')->name('store.quantity');
+Route::get('/dealers/all','Dealers\DealersController@allDealers')->name('all.dealer');
+Route::post('/dealers/new','Dealers\DealersController@storeDealer')->name('store.dealer');
+Route::get('/dealers/display/{id}','Dealers\DealersController@displayDealer')->name('display.dealer');
+Route::post('/dealers/update','Dealers\DealersController@updateDealer')->name('update.dealer');
+
+//dealer quntitiy and Premium
+Route::get('/dealers/Premiums/{id}','Dealers\DealersController@displayPremiums')->name('display.Premiums');
+Route::post('/dealers/Premiums/store','Dealers\DealersController@storePremiums')->name('store.Premiums');
 
 //days
 Route::post('/update/stay','HomeController@updatestay')->name('update.stay');

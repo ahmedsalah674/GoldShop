@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Dealing;
 use Carbon\Carbon;
+use App\Day;
 class BuyController extends Controller
 {
    public function displaydaily()
