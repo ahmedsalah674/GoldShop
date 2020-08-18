@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Sales;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Dealing;
 use App\Day;
@@ -12,15 +13,20 @@ class SalesController extends Controller
 {
    public function display($id)
     {
-      $sale=Dealing::find($id);
-      if($sale)
+      $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+      if($route == 'display.daily.sales')
       {
-        $primares=$sale->primare;
-        return view('Sales.display',compact(['sale','primares']));
+          $sale=Dealing::find($id);
+        if($sale)
+        {
+          $primares=$sale->primare;
+          return view('Sales.display',compact(['sale','primares']));
+        }
+        else
+          return redirect()->back()->with('error','حدث خطأ أثناء عملية عرض الصفحة');
       }
       else
-        return redirect()->back()->with('error','حدث خطأ أثناء عملية عرض الصفحة');
-      
+        return redirect()->route('home');
     }
 
    public function displaydaily(Request $request)
@@ -83,13 +89,16 @@ class SalesController extends Controller
     
     public function editsales($id)
     {
-       $sale=Dealing::find($id);
-      if($sale)
-        return view('Sales.editsales',compact('sale'));
-      else
-      return redirect()->back()->with('error','هناك خطأ أثناء عملية عرض الصفحة');
-
-
+      $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+      if($route == 'display.daily.sales' || $route == 'display.sales')
+      {
+        $sale=Dealing::find($id);
+        if($sale)
+          return view('Sales.editsales',compact('sale'));
+        else
+        return redirect()->back()->with('error','هناك خطأ أثناء عملية عرض الصفحة');
+      }
+      return redirect()->route('home');
     }
 
     public function updatesales(Request $request)

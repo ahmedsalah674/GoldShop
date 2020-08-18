@@ -23,6 +23,7 @@
             <td>{{round(($Premium->premium_gold /1000),4)}}جرام</td>
           @else
             <td>{{round(($Premium->premium_gold),4)}}جرام</td>
+          @endif
           <td>{{$Premium->created_at->format('d-m-Y')}}</td>
           <td>{{$Premium->created_at->format('h:i')}}</td>
         </tr>

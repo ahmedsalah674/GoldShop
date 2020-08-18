@@ -60,29 +60,45 @@ class DealersController extends Controller
     }
     public function displayDealer($id)
     {
-        $dealer=Dealer::find($id);
-        if($dealer)
+        $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+        // return $route;
+        if($route=='all.dealer')
         {
-            $quantities=Dealer_Quentity::where('dealer_id',$id)->paginate(10); 
-            $quantitiess=Dealer_Quentity::where('dealer_id',$id)->get();
-            return view('Dealers.display',compact(['id','dealer','quantities','quantitiess']));
+            $dealer=Dealer::find($id);
+            if($dealer)
+            {
+                $quantities=Dealer_Quentity::where('dealer_id',$id)->paginate(10); 
+                $quantitiess=Dealer_Quentity::where('dealer_id',$id)->get();
+                return view('Dealers.display',compact(['id','dealer','quantities','quantitiess']));
 
+            }
+            else
+                return redirect()->back()->with('error','حدث خطأ أثناء عملية العرض');
         }
         else
-            return redirect()->back()->with('error','حدث خطأ أثناء عملية العرض');
+            return redirect()->route('home');
+
     }
     
     public function displayPremiums($id)
     {
-        $dealer=Dealer::find($id);
-        if($dealer)
-            $Premiums=Dealer_Premium::where('dealer_id',$id)->paginate(10);
+        $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+        // return $route;
+        if($route == 'display.dealer')
+        {
+            $dealer=Dealer::find($id);
+            if($dealer)
+                $Premiums=Dealer_Premium::where('dealer_id',$id)->paginate(10);
+            else
+                return redirect()->back()->with('error','حدث خطأ أثناء عملية العرض');
+            if($Premiums)
+                return view('Dealers.Premiums',compact(['id','Premiums']));
+            else
+                return redirect()->back();
+        }
         else
-            return redirect()->back()->with('error','حدث خطأ أثناء عملية العرض');
-        if($Premiums)
-            return view('Dealers.Premiums',compact(['id','Premiums']));
-        else
-            return redirect()->back();
+            return redirect()->route('home');
+            
     }
 
     public function storePremiums(Request $request)

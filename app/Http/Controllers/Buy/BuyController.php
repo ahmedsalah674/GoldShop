@@ -57,19 +57,33 @@ class BuyController extends Controller
     }
     public function display($id)
     {
-      $buy=Dealing::find($id);
-      if(!$buy)
-        return view('Buys.display',compact('buy'));
-      else 
-        return redirect()->back()->with('error','هناك خطأ أثناء عملية العرض');
+      $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+      // return $id;
+      if($route =='display.daily.buy')  
+      {
+          $buy=Dealing::find($id);
+        if($buy)
+          return view('Buys.display',compact('buy'));
+        else
+          return redirect()->back()->with('error','هناك خطأ أثناء عملية العرض');
+      } 
+      return redirect()->route('home');
     }
     public function editbuy($id)
     {
-      $buy=Dealing::find($id);
-      if(!$buy)
-        return view('Buys.editbuy',compact('buy'));
+      
+      $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+      return $route;
+      if($route == 'display.buy' || $route == 'display.daily.buy' )
+      {  
+        $buy=Dealing::find($id);
+        if(!$buy)
+          return view('Buys.editbuy',compact('buy'));
+        else
+          return redirect()->back()->with('error','هناك خطأ أثناء عملية العرض');
+      }
       else
-        return redirect()->back()->with('error','هناك خطأ أثناء عملية العرض');
+        return redirect()->route('home');
     }
     public function updatebuy(Request $request)
     {
