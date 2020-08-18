@@ -3,7 +3,7 @@
 @section('content_header')
 @include('message')
 <h1>المبيعات يوم {{$date}}</h1>
-  <h5 class="text-center">ما تم بيعه = {{$day->sales}} </h5>
+  <h5 class="text-center">ما تم بيعه = {{number_format($day->sales)}} </h5>
  <div class="text-center">
     <h5 class="d-inline m-5">قم بأختيار اليوم لعرض ما تم بيعه</h5>
     <form class="d-inline m-5" id="form">
@@ -32,9 +32,13 @@
         <tr>
           <td>{{$sale->name}}</td>
           <td>{{$sale->tel}}</td>
-          <td>{{$sale->weight}} جرام</td>
+          @if ($sale->weight >1000)
+            <td>{{round(($sale->weight /1000),4)}} كيلو</td>            
+          @else
+            <td>{{round(($sale->weight),4)}} جرام</td>
+          @endif
           <td>{{$sale->caliber}}</td>
-          <td>{{$sale->price}} جنيه</td>
+          <td>{{number_format($sale->price)}} جنيه</td>
           <td>{{$sale->typetitle}}</td>
           @if($sale->type == 0)
             <td>كاش</td>

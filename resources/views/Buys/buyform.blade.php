@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 @section('title','شراء')
 @section('content_header')
+  @include('message')
   <h1><i class="fas fa-plus fa-sm text-info"></i> عملية شراء جديدة</h1>
 @endsection
 @section('content') 

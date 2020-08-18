@@ -2,7 +2,7 @@
 @section('title','اقساط')
 @section('content_header')
 @include('message')
-  <h1 class="d-inline">اقساط</h1>
+  <h1 class="d-inline">الاقساط</h1>
 @endsection
 @section('content')
 <input class="form-control mb-4 " id="productsTable" type="text"
@@ -18,8 +18,11 @@
       <tbody id="productsTable" class="text-center">
       @foreach ($Premiums as $Premium)
         <tr>
-          <td>{{$Premium->premium_price}}</td>
-          <td>{{$Premium->premium_gold}}</td>
+          <td>{{number_format($Premium->premium_price)}}</td>
+          @if($Premium->premium_gold > 1000)
+            <td>{{round(($Premium->premium_gold /1000),4)}}جرام</td>
+          @else
+            <td>{{round(($Premium->premium_gold),4)}}جرام</td>
           <td>{{$Premium->created_at->format('d-m-Y')}}</td>
           <td>{{$Premium->created_at->format('h:i')}}</td>
         </tr>

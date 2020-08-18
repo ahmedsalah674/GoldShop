@@ -13,8 +13,9 @@
       <td>هاتف العميل: {{$buy->tel}}</td>
     </tr>
     <tr>
-        <td>وزن القطعة: {{ $buy->weight }} جرام</td>
-        <td>سعر القطعة: {{ $buy->price }} جنيه</td>
+        <td>وزن القطعة: {{ round(($buy->weight),4) }} جرام</td>
+        <td>وزن القطعة: {{ round(($buy->weight/1000),4) }} كيلو</td>
+        <td>سعر القطعة: {{ number_format($buy->price) }} جنيه</td>
     </tr>
     
     <tr>

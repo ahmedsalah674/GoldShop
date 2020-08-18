@@ -13,8 +13,12 @@
       </tr>
 
       <tr>
-          <td>وزن القطعة: {{ $sale->weight }} جرام</td>
-          <td>سعر القطعة: {{ $sale->price }} جنيه</td>
+        @if ($sale->weight /1000)
+          <td>وزن القطعة: {{ round(($sale->weight /1000),4) }} جرام</td>
+        @else
+          <td>وزن القطعة: {{ round(($sale->weight),4) }} جرام</td>
+        @endif
+          <td>سعر القطعة: {{ number_format($sale->price) }} جنيه</td>
       </tr>
 
       <tr>
@@ -50,7 +54,7 @@
         @foreach ($primares as $index => $primare)
         <tr>
           <td>{{++$index}}</td>
-          <td>{{ $primare->primare_sale }} جنيه</td>
+          <td>{{ number_format($primare->primare_sale) }} جنيه</td>
           <td>{{$primare->created_at->format('Y-m-d')}}</td>
           <td>{{$primare->created_at->format('h:i')}}</td>
         </tr>
@@ -76,7 +80,7 @@
             <tr>
               <td></td> 
               <td>اجمالي الاقساط</td>
-              <td>{{$primares->sum('primare_sale')}} جنيه</td>
+              <td>{{number_format($primares->sum('primare_sale'))}} جنيه</td>
               <td></td>
             </tr>
         @endif
@@ -101,7 +105,7 @@
                   <i class="fas fa-edit fa-4x animated rotateIn mb-4  "style="color:#33b5e5"></i>
                   <form action="{!!route('premare.add')!!}" method="POST">
                       @csrf
-                  <p>المبلغ المتبقي هو {{$sale->price-$primares->sum('primare_sale')}} جنيه</p>
+                  <p>المبلغ المتبقي هو {{number_format($sale->price-$primares->sum('primare_sale'))}} جنيه</p>
                   <input type="hidden" name="dealing_id" value="{{$sale->id}}">
                       <input type="number" class="form-control" placeholder="قم بأدخال القمية المراد تسجيلها" step=".01" name="primare" max="{{$sale->price-$primares->sum('primare_sale')}}">
                 </div>
@@ -119,4 +123,3 @@
       @endif
 </div>
 @endsection
-`

@@ -12,8 +12,13 @@
             <td><b>الهاتف:</b> {{$dealer->tel}}</td>
             <td><b>عدد الكميات :</b> {{count($quantities)}}</td>
             <td><b>عدد الاقساط :</b> {{count($dealer->Premiums)}}</td>
-            <td><b>اجمالي السعر :</b>{{$quantitiess->sum('price')}} جنيه</td>
-            <td><b>اجمالي الكمية:</b>{{$quantitiess->sum('weight')}} جرام</td>
+            <td><b>اجمالي السعر :</b>{{number_format($quantitiess->sum('price'))}} جنيه</td>
+
+            @if($quantitiess->sum('weight') > 1000)
+              <td><b>اجمالي الكمية:</b>{{round(($quantitiess->sum('weight') / 1000),4)}} كيلو</td>
+            @else
+              <td><b>اجمالي الكمية:</b>{{round($quantitiess->sum('weight'),4)}} جرام</td>
+            @endif
         </tr>
         </tbody>
     </table>
@@ -32,8 +37,12 @@
         @foreach ($quantities as $index => $quantity)
         <tr>
             <td>{{++$index}}</td>
-            <td>{{ $quantity->weight}} جرام</td>
-            <td>{{ $quantity->price}} جنيه</td>
+            @if($quantity->weight > 1000)
+              <td>{{ round(($quantity->weight /1000),4)}} كيلو</td>
+            @else
+              <td>{{ round(($quantity->weight),4)}} جرام</td>
+            @endif
+            <td>{{ number_format($quantity->price)}} جنيه</td>
             <td>{{ $quantity->caliber}}</td>
             <td>{{ $quantity->typetitle}}</td>
             <td>{{ $quantity->created_at->format('d-m-Y')}}</td>
@@ -56,28 +65,28 @@
         @if (count($quantities))
             <tr>
               <td>اجمالي ما تم سداده من مال</td>
-              <td>{{$dealer->Premiums->sum('premium_price')}} جنيه</td>
+              <td>{{number_format($dealer->Premiums->sum('premium_price'))}} جنيه</td>
               <td></td>
               <td></td>
               <td>المتبقي من مال و لم يتم سداده</td>
-              <td>{{$quantitiess->sum('price') - $dealer->Premiums->sum('premium_price')}} جنيه</td>
+              <td>{{number_format(($quantitiess->sum('price') - $dealer->Premiums->sum('premium_price')))}} جنيه</td>
               <td></td>
 
           </tr>
           <tr>
             <td>اجمالي ما تم سداده من دهب</td>
             @if ($dealer->Premiums->sum('weight') <1000)
-              <td>{{$dealer->Premiums->sum('weight')}} جرام</td>
+              <td>{{round(($dealer->Premiums->sum('weight')),4)}} جرام</td>
             @else
-             <td>{{$dealer->Premiums->sum('weight') /1000}} كيلو</td>  
+             <td>{{round(($dealer->Premiums->sum('weight') /1000),4)}} كيلو</td>  
             @endif
             <td></td>
             <td></td>
             <td>المتبقي من مال و لم يتم سداده</td>
-            @if ($dealer->Premiums->sum('weight') <1000)
-              <td>{{$quantitiess->sum('weight') - $dealer->Premiums->sum('premium_gold')}}جرام</td>
+            @if ($dealer->Premiums->sum('weight') > 1000)
+              <td>{{round(($quantitiess->sum('weight') - $dealer->Premiums->sum('premium_gold')),4)}}جرام</td>
             @else
-              <td>{{$quantitiess->sum('weight') - $dealer->Premiums->sum('premium_gold')}}جرام</td>  
+              <td>{{round((($quantitiess->sum('weight') - $dealer->Premiums->sum('premium_gold')) / 1000), 4)}}كيلو</td>  
             @endif
             <td></td>
         </tr>
@@ -135,8 +144,12 @@
 
                 <div class="modal-body"><!--Body-->
                   <i class="fas fa-edit fa-4x animated rotateIn mb-4  "style="color:#33b5e5"></i>
-                  <p class="text-center">الحد الاقصي للقسط من المال {{$quantities->sum('price') - $dealer->Premiums->sum('premium_price')}} جنيه </p>
-                  <p class="text-center">الحد الاقصي للقسط من الدهب{{$quantities->sum('weight') - $dealer->Premiums->sum('premium_gold')}} جرام </p>
+                  <p class="text-center">الحد الاقصي للقسط من المال {{number_format($quantities->sum('price') - $dealer->Premiums->sum('premium_price'))}} جنيه </p>
+                  @if (round(($quantities->sum('weight') - $dealer->Premiums->sum('premium_gold')),4) > 1000)
+                    <p class="text-center">الحد الاقصي للقسط من الدهب{{round(($quantities->sum('weight') - $dealer->Premiums->sum('premium_gold'))/1000,4)}} كيلو </p>     
+                  @else
+                    <p class="text-center">الحد الاقصي للقسط من الدهب{{round(($quantities->sum('weight') - $dealer->Premiums->sum('premium_gold')),4)}} جرام </p>  
+                  @endif
                   <form action="{!!route('store.Premiums')!!}" method="POST">
                       @csrf
                     <input type="number" class="form-control m-1" step=".01" name="premium_price" value="{{old('premium_price')}}" placeholder="قم بأدخال ما تم دفعه من مال">

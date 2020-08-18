@@ -35,23 +35,23 @@
                         </tr>
                         
                         <tr class="text-center "> 
-                            <td>{{$day->stay}}</td>
+                            <td>{{number_format($day->stay)}}</td>
                             <td>+</td>
-                            <td>{{$day->sales}}</td>
+                            <td>{{number_format($day->sales)}}</td>
                             <td>-</td>
-                            <td>{{$day->buys}}</td> 
+                            <td>{{number_format($day->buys)}}</td> 
                             <td> = </td>
                             @if ($day->total < 0)
-                                <td><b>{{$day->total * -1}}- جنيه</b></td>
+                                <td><b>{{number_format($day->total * -1)}}- جنيه</b></td>
                             @else
-                                <td><b>{{$day->total}} جنيه</b></td>
+                                <td><b>{{number_format($day->total)}} جنيه</b></td>
                             @endif
                         </tr>
                     </table>
                 </div>
                 @if ($day->total < 0)
                     <div class="text-center">
-                        تم شراء بمبلغ <b>{{$day->total * -1}}- جنيه</b> من خارج الايراد حتي الان و سيتم خصصم المبلغ
+                        تم شراء بمبلغ <b>{{number_format($day->total * -1)}}- جنيه</b> من خارج الايراد حتي الان و سيتم خصصم المبلغ
                     </div>    
                 @endif
                 

@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 @section('title','تجار')
 @section('content_header')
+@include('message')
   <h1><i class="fas fa-plus fa-sm text-info"></i> كمية جديدة</h1>
 @endsection
 @section('content') 
@@ -15,11 +16,6 @@
             <option value="{{ $dealer->id }}">{{ $dealer->name }}</option>
           @endforeach
         </select>
-      </div>
-      <div class="form-group">
-        <i class="fas fa-pencil-alt text-info"></i>
-        <label>رقم الهاتف للعميل</label>
-        <input type="tel" class="form-control" name="tel"placeholder=" رقم هاتف التاجر" value="{{ old('tel') }}" required>
       </div>
         <div class="form-group">
             <i class="fas fa-pencil-alt text-info"></i>

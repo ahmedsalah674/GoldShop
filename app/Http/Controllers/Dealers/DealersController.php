@@ -19,7 +19,6 @@ class DealersController extends Controller
     }
     public function storeQuantity(Request $request)
     {
-        dd($request);
        $quentity= Dealer_Quentity::create([
             'weight'=>$request->weight,
             'price'=>$request->price,
