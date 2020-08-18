@@ -193,14 +193,15 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-
-        [
-            'text' => 'المبيعات',
-            'icon'    => 'far fa-money-bill-alt ',
-            'submenu' => 
-            [
                 [
-                    'text' => 'عملية جديدة',
+                    'text' => 'الصفحة الرئيسية',
+                    'icon' => 'fas fa-home m-1',
+                    'url'  => 'home',
+                ],
+
+                ['header' => 'البيع'],
+                [
+                    'text' => 'عملية بيع جديدة',
                     'icon' => 'fas fa-fw fa-plus ',
                     'url'  => 'sales/form',
                 ],
@@ -214,32 +215,23 @@ return [
                     'icon' => 'far fa-handshake ',
                     'url'=> '/premiums/page',
                 ],
-            ],//end of submenu
-        ],//end of sales
+        
 
-        [
-            'text' => 'المشتريات',
-            'icon'    => 'fas fa-fw fa-th my-2',
-            'submenu' => 
-            [
+                ['header' => 'الشراء'],
+       
                 [
-                    'text' => 'عملية جديدة',
+                    'text' => 'عملية شراء جديدة',
                     'icon'=>'fas fa-fw fa-exclamation',
                     'url'=> 'buy/form',
                 ],
                 [
-                    'text' => 'مشتريات اليوم',
+                    'text' => 'مشتريات يومية',
                     'icon' => 'fas fa-fw fa-check',
                     'url'=> 'display/daily/buy',
                 ],
-            ]//end of submenu
-        ],//end of buys
+            
         //deales
-        [
-            'text' => 'تجار',
-                'icon'    => 'fas fa-fw fa-users my-2',
-                'submenu' => 
-            [
+                ['header' => 'التجار'],
                 [
                     'text' => 'كمية جديدة',
                     'icon' => 'fas fa-fw fa-check',
@@ -250,14 +242,7 @@ return [
                     'icon' => 'fas fa-fw fa-users my-2',
                     'url'=> '/dealers/all',
                 ],
-            ],//end of dealers
-        ],//end sub menu
-
-        [
-            'text' => 'تجربة',
-                'icon'    => 'fas fa-fw fa-users my-2',
-                'url'=> '/test',
-        ],//end sub menu
+           
 
         
     ],

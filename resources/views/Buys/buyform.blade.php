@@ -19,7 +19,7 @@
         <div class="form-group">
             <i class="fas fa-pencil-alt text-info"></i>
             <label>وزن القطعة</label>
-              <input type="number" class="form-control" step=".001" name="weight"placeholder="وزن القطعة " value="{{ old('weight') }}" required>
+              <input type="number" class="form-control" step=".001" name="weight"placeholder="وزن القطعة " value="{{ old('weight') }}" min="0.01" required>
         </div>
       <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> عيار القطعة</label>
@@ -31,7 +31,7 @@
       </div>
       <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> سعر القطعة</label>
-        <input type="number" class="form-control" step=".001" name="price"placeholder="سعر القطعة " value="{{ old('price') }}"required>
+        <input type="number" class="form-control" step=".001" name="price"placeholder="سعر القطعة " value="{{ old('price') }}" min="0.01" required>
       </div>
       <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> نوع القطعة</label><input type="text" class="form-control" name="typetitle"placeholder="نوع القطعة " value="{{ old('typetitle') }}" required>

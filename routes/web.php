@@ -23,13 +23,13 @@ Route::get('/home','HomeController@index')->name('home');
 Route::get('/buy/form','Buy\BuyController@buyform')->name('buy.form');
 Route::post('/buy/form','Buy\BuyController@storebuy')->name('store.buy');
 Route::get('/display/daily/buy','Buy\BuyController@displaydaily')->name('display.daily.buy');
-Route::post('/edit/buy','Buy\BuyController@editbuy')->name('edit.buy');
+Route::get('/edit/buy/{id}','Buy\BuyController@editbuy')->name('edit.buy');
 Route::post('/update/buy','Buy\BuyController@updatebuy')->name('update.buy');
-Route::post('/display/buy','Buy\BuyController@display')->name('display.buy');
+Route::get('/display/buy/{id}','Buy\BuyController@display')->name('display.buy');
 //Sales
 Route::get('/sales/form','Sales\SalesController@salesform')->name('sales.form');
 Route::post('/sales/form','Sales\SalesController@storesales')->name('store.sales');
-Route::post('/edit/sales','Sales\SalesController@editsales')->name('edit.sales');
+Route::get('/edit/sales/{id}','Sales\SalesController@editsales')->name('edit.sales');
 Route::post('/update/sales','Sales\SalesController@updatesales')->name('update.sales');
 Route::get('/display/daliy/sales','Sales\SalesController@displaydaily')->name('display.daily.sales');
 Route::get('/display/sales/{id}','Sales\SalesController@display')->name('display.sales');
@@ -52,9 +52,5 @@ Route::post('/update/stay','HomeController@updatestay')->name('update.stay');
 Route::get('/premiums/page','Sales\SalesController@allpremiumspage')->name('premiums.page');
 Route::post('/premiums/add','Sales\SalesController@addPraimare')->name('premare.add');
 
-//
-Route::get('/test','HomeController@test')->name('test');
-Route::post('/test','HomeController@test2')->name('test2');
-//
 
 

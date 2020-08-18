@@ -14,7 +14,7 @@
 
       <tr>
           <td>وزن القطعة: {{ $sale->weight }} جرام</td>
-          <td>سعر القطعة: {{ $sale->price }} جنيه مصري</td>
+          <td>سعر القطعة: {{ $sale->price }} جنيه</td>
       </tr>
 
       <tr>
@@ -31,7 +31,7 @@
         @if ($sale->type && $sale->finsh)
           <td><b>تم تسديد القسط بالكامل</b> </td>
         @elseif($sale->type && !$sale->finsh)
-          <td><b>لم يتم التسديد الاقساط</b></td>
+          <td><b>لم يتم تسديد المبلغ حتي الان</b></td>
         @endif
       </tr>
       
@@ -44,27 +44,40 @@
         <th>#</th>
         <th>المبلغ المدفوع</th>
         <th>التاريخ</th>
+        <th>الوقت</th>
       </thead
       <tbody>
         @foreach ($primares as $index => $primare)
         <tr>
           <td>{{++$index}}</td>
           <td>{{ $primare->primare_sale }} جنيه</td>
-          <td>{{$primare->created_at}}</td>
+          <td>{{$primare->created_at->format('Y-m-d')}}</td>
+          <td>{{$primare->created_at->format('h:i')}}</td>
         </tr>
         @endforeach
-        @if(!count($primares))
+        @if(!$sale->finsh && (!count($primares)&& !$sale->finsh))
           <tr>
             <td></td>
             <td class="text-center"><h5>لم يتم تسديد اي قسط حتي الان</h5> </td>
+            <td></td>
+            <td></td>
           </tr>
+          @elseif(!count($primares))
+            <tr>
+              <td></td>
+              <td class="text-center"><h5>تم تسديد القسط</h5> </td>
+              <td></td>
+              <td></td>
+            </tr>
         @endif
       </tbody>
       <tfoot class="card-footer text-muted">
         @if (count($primares))
             <tr>
+              <td></td> 
               <td>اجمالي الاقساط</td>
-            <td>{{$primares->sum('primare_sale')}} جنيه</td>
+              <td>{{$primares->sum('primare_sale')}} جنيه</td>
+              <td></td>
             </tr>
         @endif
       </tfoot>  
@@ -101,12 +114,9 @@
             </div>
           </div>
       @endif
-      @if(!($sale->type && $sale->finsh))
-                <form action="{!!route('edit.sales')!!}" method="POST" class="d-inline">
-                  @csrf
-                  <input type="hidden" name="id" value="{{$sale->id}}">
-                  <button type="submit"  class="btn btn-info col-md-4">تعديل</a>  
-                </form>
+      @if(!($sale->type && $sale->finsh)) 
+        <a href="{!!route('edit.sales',$sale->id)!!}"  class="btn btn-info col-md-4">تعديل</a>  
       @endif
 </div>
 @endsection
+`

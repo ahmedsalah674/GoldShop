@@ -13,8 +13,14 @@ class SalesController extends Controller
    public function display($id)
     {
       $sale=Dealing::find($id);
-      $primares=$sale->primare;
-      return view('Sales.display',compact(['sale','primares']));
+      if($sale)
+      {
+        $primares=$sale->primare;
+        return view('Sales.display',compact(['sale','primares']));
+      }
+      else
+        return redirect()->back()->with('error','حدث خطأ أثناء عملية عرض الصفحة');
+      
     }
 
    public function displaydaily(Request $request)
@@ -41,13 +47,6 @@ class SalesController extends Controller
       $sales=Dealing::where('type',1)->where('role',0)->where('finsh','0')->paginate(10);
       return view('Sales.displaypremiums',compact('sales'));
     }
-
-    // public function allpremiumsview(Request $request)
-    // {
-    //   dd($request->date);
-    //   $request->date;
-    // }
-
     public function salesform()
     {
        return view('Sales.salesform');
@@ -66,7 +65,7 @@ class SalesController extends Controller
             'caliber' => $request->caliber,
             'price' => $request->price,
             'type' => $request->type,
-            'finsh'=> !$request->type,
+            'finsh'=> (int)!($request->type),
             'typetitle' => $request->typetitle,
             'role' => 0,
           ]);
@@ -76,52 +75,61 @@ class SalesController extends Controller
                 $day->total+=$request->price;
                 $day->update();
             } 
-        //  else
-        //  {
-        //   primare_sales::create([
-        //     'dealing_id' => $dealing->id,
-        //     'primare_sale' => $dealing->sale,
-        //   ]);
-        //  }
           return redirect()->back()->with('message','تم تسجيل العملية ');
         }
       else
         return redirect()->route('home')->with('error','حدث خطأ أثناء عملية التسجليل يرجي المحاولة مرة اخري');
     }
     
-    public function editsales(Request $request)
+    public function editsales($id)
     {
-       $sale=Dealing::find($request->id);
-       return view('Sales.editsales',compact('sale'));
+       $sale=Dealing::find($id);
+      if($sale)
+        return view('Sales.editsales',compact('sale'));
+      else
+      return redirect()->back()->with('error','هناك خطأ أثناء عملية عرض الصفحة');
+
+
     }
 
     public function updatesales(Request $request)
     {
       $sales=Dealing::find($request->id);
+      if($request->price != $sales->price)
+         {
+           $day=Day::whereDate('created_at',$sales->created_at->format('Y-m-d'))->first();
+            $day->sales-=$sales->price;
+            $day->total-=$sales->price;
+            $day->sales+=$request->price;
+            $day->total+=$request->price;
+            $day->update(); 
+         }
       $request = $request->except('__token');
       $sales->update($request);
-      $day=Day::whereDate('created_at',carbon::now()->formate('Y-m-d'));
-      return redirect()->route('display.daily.sales',$day)->with('message','لقد تم تعديل العملية');
+
+      return redirect()->route('display.daily.sales')->with('message','لقد تم تعديل العملية');
     }
     public function addPraimare(Request $request)
     {
       $day=Day::whereDate('created_at',carbon::now()->format('Y-m-d'))->first();
       $sale=Dealing::find($request->dealing_id);
-      if (!$day)
+      if (!$day || !$sale)
         return redirect()->route('home')->with('error','حدث خطأ اثناء التسجيل يرجي المحاولة مرة اخري');
       else 
       {
        $day->sales+=$request->primare;
        $day->total+=$request->primare;
-       $day->update(); 
-       $sale->finsh=1;
-       $sale->update;
+       $day->update();
       }
       $primare=Primare_Sales::create([
         'dealing_id' => $request->dealing_id,
         'primare_sale' => $request->primare,
       ]);
-    
+      if($sale->primare->sum('primare_sale') == $sale->price)
+      {
+        $sale->finsh=1;
+        $sale->update();
+      }
       return redirect()->back()->with('message','لقد تم اضافة القسط ');
     }
     

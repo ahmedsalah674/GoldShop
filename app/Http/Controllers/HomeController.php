@@ -21,8 +21,18 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+      $date=$request->date;
+        if($date)
+      {
+          
+        $day=Day::whereDate('created_at',$date)->first(); 
+        if(!$day)
+          return redirect()->back()->with('error','لم يتم استعمال الجهاز في ذلك اليوم مطلقاً');
+      }   
+    else
+      {
         $now=\Carbon\Carbon::now()->format('Y-m-d');
         // return $now;
         $day=Day::whereDate('created_at',$now)->first();
@@ -36,7 +46,9 @@ class HomeController extends Controller
                 'stay'=>0,
                 'total'=>0,
             ]);}
-        return view('home',compact('day'));
+        return view('home',compact(['day','date']));
+      }
+      return view('home',compact(['day','date']));
     }
     public function updatestay(Request $request)
     {
@@ -54,14 +66,5 @@ class HomeController extends Controller
         }
         else
             return redirect()->route('home')->with('error','حدث خطأ اثناء التعديل ارجوا المحاولة مرة اخرى');
-    }
-
-    public function test()
-    {
-        return view('test');
-    }
-    public function test2(Request $request)
-    {
-        dd($request);
     }
 }

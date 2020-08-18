@@ -1,10 +1,11 @@
 @extends('adminlte::page')
 @section('title','تعديل')
 @section('content_header')
+@include('message')
   <h1><i class="fas fa-plus fa-sm text-info"></i>تعديل عملية الشراء</h1>
 @endsection
 @section('content') 
-<form class="col-md-6" action=""  enctype="multipart/form-data">
+<form class="col-md-6" action="{!!route('update.buy')!!}" method="POST"  enctype="multipart/form-data">
     @csrf
       <div class="form-group">
         <i class="fas fa-pencil-alt text-info"></i>
@@ -41,13 +42,14 @@
       </div>
       <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> سعر القطعة</label>
-        <input type="number" class="form-control" step=".001" name="price"placeholder="سعر القطعة المباعة" value="{{$buy->price}}"required>
+        <input type="number" class="form-control" step=".001" name="price" placeholder="سعر القطعة المباعة" value="{{$buy->price}}"required>
       </div>
       <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> نوع القطعة</label><input type="text" class="form-control" name="typetitle"placeholder="نوع القطعة المباعة" value="{{$buy->typetitle}}" required>
       </div>
       <input type="hidden" name="type" value="0">
       <input type="hidden" name="role" value="1">
+      <input type="hidden" name="id" value="{{$buy->id}}">
       <div class="form-group">
         <button type="submit" style="width:100%"class="btn btn-primary"><i class="fas fa-plus"></i> تعديل عملية الشراء </button>
       </div>

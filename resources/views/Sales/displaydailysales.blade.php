@@ -25,31 +25,30 @@
       <th>نوع القطعة</th>
       <th>نوع العملية</th>
       <th>التاريخ</th>
+      <th>الوقت</th>
     </thead>
       <tbody id="productsTable" class="text-center">
       @foreach ($sales as $sale)
         <tr>
           <td>{{$sale->name}}</td>
           <td>{{$sale->tel}}</td>
-          <td>{{$sale->weight}}</td>
+          <td>{{$sale->weight}} جرام</td>
           <td>{{$sale->caliber}}</td>
-          <td>{{$sale->price}}</td>
+          <td>{{$sale->price}} جنيه</td>
           <td>{{$sale->typetitle}}</td>
           @if($sale->type == 0)
             <td>كاش</td>
           @else
             <td>قسط</td>
           @endif
-          <td>{{$sale->created_at}}</td>
+          <td>{{$sale->created_at->format('d-m-Y')}}</td>
+          <td>{{$sale->created_at->format('h:i')}}</td>
 
           <td>
           <a href="{!!route('display.sales',$sale->id)!!}"class="btn btn-success btn-sm" >عرض</a>
           @if(!($sale->type && $sale->finsh)|| !$sale->type)
-          <form action="{!!route('edit.sales')!!}" method="POST" class="d-inline">
-            @csrf
-            <input type="hidden" name="id" value="{{$sale->id}}">
-            <button type="submit" class="btn btn-primary btn-sm">تعديل</button>
-          </form>
+           
+            <a href="{!!route('edit.sales',$sale->id)!!}" class="btn btn-primary btn-sm">تعديل</a>
           @endif
           </td>
         </tr>

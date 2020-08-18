@@ -1,8 +1,15 @@
 @extends('adminlte::page')
 @section('title','المشتريات')
 @section('content_header')
-  <h1>المشتريات اليومية</h1>
-  <h5 class="text-center">ما تم صرفه اليوم = 300 </h5>
+@include('message')
+  <h1>المشتريات اليومية {{$date}}</h1>
+  <h5 class="text-center">ما تم شرائه = {{$day->buys}} </h5>
+  <div class="text-center">
+    <h5 class="d-inline m-5">قم بأختيار اليوم لعرض ما تم شرائه</h5>
+    <form class="d-inline m-5" id="form">
+    <input type="date"  name="date" id="datepicker" class="datepicker form-control w-25 d-inline" >
+    </form>
+  </div>
 @endsection
 @section('content')
 <input class="form-control mb-4 " id="productsTable" type="text"
@@ -17,28 +24,22 @@
       <th>السعر</th>
       <th>نوع القطعة</th>
       <th>التاريخ</th>
+      <th>الوقت</th>
     </thead>
     <tbody id="productsTable" class="text-center">
       @foreach ($buys as $buy)
         <tr>
           <td>{{$buy->name}}</td>
           <td>{{$buy->tel}}</td>
-          <td>{{$buy->weight}}</td>
+          <td>{{$buy->weight}}جرام</td>
           <td>{{$buy->caliber}}</td>
-          <td>{{$buy->price}}</td>
+          <td>{{$buy->price}}جنيه</td>
           <td>{{$buy->typetitle}}</td>
-          <td>{{$buy->typetitle}}</td>
+          <td>{{$buy->created_at->format('d-m-Y')}}</td>
+          <td>{{$buy->created_at->format('h:i')}}</td>
           <td>
-            <form action="{!!route('displaybuy')!!}" method="post" class="d-inline">
-              @csrf
-              <input type="hidden" name="id" value="{{$buy->id}}">
-              <button type="submit" class="btn btn-success btn-sm">عرض</button>
-            </form>
-            <form action="{!!route('editbuy')!!}" method="post" class="d-inline">
-              @csrf
-              <input type="hidden" name="id" value="{{$buy->id}}">
-              <button type="submit" class="btn btn-primary btn-sm">تعديل</button>
-            </form>
+          <a href="{!!route('display.buy',$buy->id)!!}" class="btn btn-success btn-sm">عرض</a>
+          <a href="{!!route('edit.buy',$buy->id)!!}" type="submit" class="btn btn-primary btn-sm">تعديل</a>
           </td>
         </tr>
       @endforeach
@@ -48,8 +49,16 @@
     <div >{{$buys->links()}}</div>
     </div>
 @endsection
-
- @section('js')
+@section('css')
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+<style>
+  [type="date"]::-webkit-calendar-picker-indicator {
+    display: none;}
+</style>
+@endsection
+@section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>$( ".datepicker" ).datepicker({format: 'yyyy-mm-dd',});</script>  
 <script>
   $(document).ready(function(){
     $("#productsTable").on("keyup", function() {
@@ -59,6 +68,10 @@
       });
     });
   });
-  </script>
-
+</script>
+<script>
+  $('#datepicker').on('change',function(){
+        $("#form").submit();
+    });
+</script>
 @endsection 

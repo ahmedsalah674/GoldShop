@@ -27,19 +27,15 @@
           <tr>
             <td>{{$sale->name}}</td>
             <td>{{$sale->tel}}</td>
-            <td>{{$sale->weight}}</td>
+            <td>{{$sale->weight}} جرام</td>
             <td>{{$sale->caliber}}</td>
-            <td>{{$sale->price}}</td>
+            <td>{{$sale->price}} جنيه</td>
             <td>{{$sale->typetitle}}</td>
             <td>قسط</td>
             <td>{{$sale->created_at}}</td>
             <td>
              <a href="{!!route('display.sales',$sale->id)!!}"class="btn btn-success btn-sm">عرض</a>
-             <form action="{!!route('edit.sales')!!}" method="POST" class="d-inline">
-                @csrf
-                <input type="hidden" name="id" value="{{$sale->id}}">
-                <button type="submit" class="btn btn-primary btn-sm">تعديل</button>
-              </form>
+             <a href="{!!route('edit.sales', $sale->id)!!}" class="btn btn-primary btn-sm">تعديل</button>
             </td>
           </tr>
       @endforeach
