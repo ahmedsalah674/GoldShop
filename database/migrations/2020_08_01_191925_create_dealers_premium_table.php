@@ -16,8 +16,8 @@ class CreateDealersQuentityPremiumTable extends Migration
         Schema::create('dealers_premium', function (Blueprint $table) {
             $table->id();
             $table->integer('dealer_id');
-            $table->decimal('premium_price')->nullable();
-            $table->decimal('premium_gold')->nullable();
+            $table->decimal('premium_price')->default(0);
+            $table->decimal('premium_gold')->default(0);
             $table->timestamps();
         });
     }

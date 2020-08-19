@@ -62,7 +62,7 @@ class DealersController extends Controller
     {
         $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
         // return $route;
-        if($route=='all.dealer')
+        if($route=='all.dealer' || $route=='new.quantity' || $route=='display.Premiums' || $route=='display.dealer')
         {
             $dealer=Dealer::find($id);
             if($dealer)

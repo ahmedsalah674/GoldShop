@@ -46,7 +46,7 @@
     </tbody>  
   </table>
   <div class="row d-flex justify-content-center ">
-    <div class="  ">{{$sales->links()}}</div>
+    <div class="  ">{{$sales->appends(request()->except('page'))->links()}}</div>
     </div>
 @endsection
 @section('css')

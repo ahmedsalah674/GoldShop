@@ -17,8 +17,9 @@ Auth::routes(['register'=>false]);
 //     return view('welcome');
 // });
 //home
-Route::get('/',function(){return redirect()->route('home');});
-Route::get('/home','HomeController@index')->name('home');
+
+Route::get('/',function(){return redirect()->route('home');})->middleware('destroy');
+Route::get('/home','HomeController@index')->middleware('destroy')->name('home');
 //Buy
 Route::get('/buy/form','Buy\BuyController@buyform')->name('buy.form');
 Route::post('/buy/form','Buy\BuyController@storebuy')->name('store.buy');

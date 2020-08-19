@@ -10,15 +10,15 @@
         <tr>
             <td><b>الاسم:</b> {{ $dealer->name }}</td>
             <td><b>الهاتف:</b> {{$dealer->tel}}</td>
-            <td><b>عدد الكميات :</b> {{count($quantities)}}</td>
+            {{-- <td><b>عدد الكميات :</b> {{count($quantities)}}</td>
             <td><b>عدد الاقساط :</b> {{count($dealer->Premiums)}}</td>
-            <td><b>اجمالي السعر :</b>{{number_format($quantitiess->sum('price'))}} جنيه</td>
+            <td><b>اجمالي السعر :</b>{{number_format($quantitiess->sum('price'))}} جنيه</td> --}}
 
-            @if($quantitiess->sum('weight') > 1000)
+            {{-- @if($quantitiess->sum('weight') > 1000)
               <td><b>اجمالي الكمية:</b>{{round(($quantitiess->sum('weight') / 1000),4)}} كيلو</td>
             @else
               <td><b>اجمالي الكمية:</b>{{round($quantitiess->sum('weight'),4)}} جرام</td>
-            @endif
+            @endif --}}
         </tr>
         </tbody>
     </table>
@@ -29,7 +29,7 @@
             <th>حجم الكمية</th>
             <th>الاجرة</th>
             <th>العيار</th>
-            <th>وصف</th>
+            {{-- <th>وصف</th> --}}
             <th>التاريخ</th>
             <th>الوقت</th>
         </thead>
@@ -42,9 +42,9 @@
             @else
               <td>{{ round(($quantity->weight),4)}} جرام</td>
             @endif
-            <td>{{ number_format($quantity->price)}} جنيه</td>
+            <td>{{ number_format($quantity->price,2)}} جنيه</td>
             <td>{{ $quantity->caliber}}</td>
-            <td>{{ $quantity->typetitle}}</td>
+            {{-- <td>{{ $quantity->typetitle}}</td> --}}
             <td>{{ $quantity->created_at->format('d-m-Y')}}</td>
             <td>{{ $quantity->created_at->format('h:i')}}</td>
         </tr> 
@@ -64,30 +64,34 @@
         <tfoot class="card-footer text-muted">
         @if (count($quantities))
             <tr>
-              <td>اجمالي ما تم سداده من مال</td>
-              <td>{{number_format($dealer->Premiums->sum('premium_price'))}} جنيه</td>
+              {{-- <td>اجمالي ما تم سداده من مال</td> --}}
+              {{-- <td>{{number_format($dealer->Premiums->sum('premium_price'))}} جنيه</td> --}}
+              <td></td>
               <td></td>
               <td></td>
               <td>المتبقي من مال و لم يتم سداده</td>
-              <td>{{number_format(($quantitiess->sum('price') - $dealer->Premiums->sum('premium_price')))}} جنيه</td>
+              <td>{{number_format( ($quantitiess->sum('price') - $dealer->Premiums->sum('premium_price')) ,2)}} جنيه</td>
+              <td></td>
               <td></td>
 
           </tr>
           <tr>
-            <td>اجمالي ما تم سداده من دهب</td>
+            {{-- <td>اجمالي ما تم سداده من دهب</td>
             @if ($dealer->Premiums->sum('weight') <1000)
               <td>{{round(($dealer->Premiums->sum('weight')),4)}} جرام</td>
             @else
              <td>{{round(($dealer->Premiums->sum('weight') /1000),4)}} كيلو</td>  
-            @endif
+            @endif --}}
             <td></td>
             <td></td>
-            <td>المتبقي من مال و لم يتم سداده</td>
-            @if ($dealer->Premiums->sum('weight') > 1000)
+            <td></td>
+            <td>المتبقي من الدهب و لم يتم سداده</td>
+            @if (($quantitiess->sum('weight') - $dealer->Premiums->sum('premium_gold')) < 1000)
               <td>{{round(($quantitiess->sum('weight') - $dealer->Premiums->sum('premium_gold')),4)}}جرام</td>
             @else
               <td>{{round((($quantitiess->sum('weight') - $dealer->Premiums->sum('premium_gold')) / 1000), 4)}}كيلو</td>  
             @endif
+            <td></td>
             <td></td>
         </tr>
         @endif
@@ -112,8 +116,8 @@
                   <i class="fas fa-edit fa-4x animated rotateIn mb-4  "style="color:#33b5e5"></i>
                   <form action="{!!route('store.quantity')!!}" method="POST">
                       @csrf
-                    <input type="number" class="form-control m-1" step=".01" name="weight" value="{{old('weight')}}" placeholder="قم بأدخال الوزن المراد تسجيله" required>
-                    <input type="number" class="form-control m-1" step=".01" name="price" value="{{old('price')}}" placeholder="قم بأدخال الاجرة "  required>
+                    <input type="number" class="form-control m-1" step=".001" name="weight" value="{{old('weight')}}" placeholder="قم بأدخال الوزن المراد تسجيله" required>
+                    <input type="number" class="form-control m-1" step=".001" name="price" value="{{old('price')}}" placeholder="قم بأدخال الاجرة "  required>
                     <select name="caliber" class="form-control m-1">
                         <option value="18">18</option>
                         <option value="21">21</option>
@@ -144,16 +148,16 @@
 
                 <div class="modal-body"><!--Body-->
                   <i class="fas fa-edit fa-4x animated rotateIn mb-4  "style="color:#33b5e5"></i>
-                  <p class="text-center">الحد الاقصي للقسط من المال {{number_format($quantities->sum('price') - $dealer->Premiums->sum('premium_price'))}} جنيه </p>
-                  @if (round(($quantities->sum('weight') - $dealer->Premiums->sum('premium_gold')),4) > 1000)
-                    <p class="text-center">الحد الاقصي للقسط من الدهب{{round(($quantities->sum('weight') - $dealer->Premiums->sum('premium_gold'))/1000,4)}} كيلو </p>     
+                  <p class="text-center"> الحد الاقصي للقسط من المال {{number_format($quantitiess->sum('price') - $dealer->Premiums->sum('premium_price'))}} جنيه </p>
+                  @if (round(($quantitiess->sum('weight') - $dealer->Premiums->sum('premium_gold')),4) > 1000)
+                    <p class="text-center"> الحد الاقصي للقسط من الدهب {{round(($quantitiess->sum('weight') - $dealer->Premiums->sum('premium_gold'))/1000,4)}} كيلو </p>     
                   @else
-                    <p class="text-center">الحد الاقصي للقسط من الدهب{{round(($quantities->sum('weight') - $dealer->Premiums->sum('premium_gold')),4)}} جرام </p>  
+                    <p class="text-center"> الحد الاقصي للقسط من الدهب {{round(($quantitiess->sum('weight') - $dealer->Premiums->sum('premium_gold')),4)}} جرام </p>  
                   @endif
                   <form action="{!!route('store.Premiums')!!}" method="POST">
                       @csrf
-                    <input type="number" class="form-control m-1" step=".01" name="premium_price" value="{{old('premium_price')}}" placeholder="قم بأدخال ما تم دفعه من مال">
-                  <input type="number" class="form-control m-1" step=".01" name="premium_gold" value="{{old('premium_gold')}}" placeholder="قم بأدخال كمية الدهب " >
+                    <input type="number" class="form-control m-1" step=".001" name="premium_price" value="{{old('premium_price')}}" placeholder="قم بأدخال ما تم دفعه من مال">
+                  <input type="number" class="form-control m-1" step=".001" name="premium_gold" value="{{old('premium_gold')}}" placeholder="قم بأدخال كمية الدهب " >
                     <input type="hidden" name="dealer_id" value="{{$id}}">
                 </div>
 

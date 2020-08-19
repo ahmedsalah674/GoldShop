@@ -10,15 +10,15 @@
   
   <table class="table table-hover ">
     <thead class="text-center">
-      <th>الوزن</th>
-      <th>المبلغ</th> 
+      <th>المبلغ</th>
+      <th>الوزن</th> 
       <th>التاريخ</th> 
       <th>الوقت</th> 
     </thead>
       <tbody id="productsTable" class="text-center">
       @foreach ($Premiums as $Premium)
         <tr>
-          <td>{{number_format($Premium->premium_price)}}</td>
+          <td>{{number_format($Premium->premium_price,2)}}جنيه</td>
           @if($Premium->premium_gold > 1000)
             <td>{{round(($Premium->premium_gold /1000),4)}}جرام</td>
           @else

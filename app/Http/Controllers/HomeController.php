@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+      $now=\Carbon\Carbon::now()->format('Y-m-d');
       $date=$request->date;
         if($date)
       {
@@ -35,6 +36,8 @@ class HomeController extends Controller
       {
         $now=\Carbon\Carbon::now()->format('Y-m-d');
         // return $now;
+        // $s=$now->subYears(5);
+        // return s;
         $day=Day::whereDate('created_at',$now)->first();
         // return $day;
         if(!$day)
@@ -46,6 +49,9 @@ class HomeController extends Controller
                 'stay'=>0,
                 'total'=>0,
             ]);}
+            // $days=Day::all();
+            // // foreach($days as $d)
+            // //   if($d->created_at->diffInYear($now))
         return view('home',compact(['day','date']));
       }
       return view('home',compact(['day','date']));

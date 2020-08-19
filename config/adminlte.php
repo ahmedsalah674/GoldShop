@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'محل الدهب',
+    'title' => 'العمدة للمصوغات',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => 'محل الدهب',
+    'logo' => 'العمدة للمصوغات',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image-xl ',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'محل الدهب',
+    'logo_img_alt' => 'العمدة للمصوغات',
 
     /*
     |--------------------------------------------------------------------------

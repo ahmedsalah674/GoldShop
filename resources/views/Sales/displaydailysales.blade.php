@@ -7,7 +7,7 @@
  <div class="text-center">
     <h5 class="d-inline m-5">قم بأختيار اليوم لعرض ما تم بيعه</h5>
     <form class="d-inline m-5" id="form">
-    <input type="date"  name="date" id="datepicker" class="datepicker form-control w-25 d-inline" >
+    <input type="date"  name="date" id="datepicker" class="datepicker form-control w-25 d-inline" value="{{$date}}" >
     </form>
   </div>
 @endsection
@@ -60,7 +60,7 @@
     </tbody>  
   </table>
   <div class="row d-flex justify-content-center ">
-    <div class="  ">{{$sales->links()}}</div>
+    <div class="  ">{{$sales->appends(request()->except('page'))->links()}}</div>
     </div>
 @endsection
 @section('css')
