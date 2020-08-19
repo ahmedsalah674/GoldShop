@@ -8,7 +8,7 @@ class Dealer_Quentity extends Model
 {
     protected $table ='dealers_quentity';
     protected $fillable =[
-        'weight','price','typetitle','caliber','dealer_id',
+        'weight','price','dealer_id',
     ];
     public function dealer(Type $var = null)
     {

@@ -8,7 +8,7 @@ class Dealer extends Model
 {
     protected $table ='dealers';
     protected $fillable = [
-        'name', 'tel',
+        'name', 'tel','caliber'
     ];
     public function quantity()
     {

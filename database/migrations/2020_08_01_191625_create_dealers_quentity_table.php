@@ -17,8 +17,8 @@ class CreateDealersQuentityTable extends Migration
             $table->id();
             $table->decimal('weight');
             $table->decimal('price');
-            $table->string('typetitle');
-            $table->integer('caliber');
+            // $table->string('typetitle');
+            // $table->integer('caliber');
             $table->integer('dealer_id');
             $table->timestamps();
         });

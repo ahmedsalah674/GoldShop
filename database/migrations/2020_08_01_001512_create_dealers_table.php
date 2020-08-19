@@ -17,6 +17,7 @@ class CreateDealersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('tel');
+            $table->integer('caliber');
             $table->timestamps();
         });
     }

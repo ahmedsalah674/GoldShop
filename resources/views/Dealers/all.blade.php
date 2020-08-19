@@ -12,7 +12,7 @@
                     
                 <div class="modal-header bg-primary d-flex justify-content-center" ><!--Header-->
                   <button type="button"  class="btn text-white m-0 p-0" data-toggle="modal" data-target="#modalPush"><i class="fas fa-times "></i></button>
-                  <h5 class="heading m-auto">قم بأدخال اسم التاجر و رقم هاتفه</h5>
+                  <h5 class="heading m-auto">قم بأدخال اسم التاجر و رقم هاتفه و العيار الخاص بيه</h5>
                 </div>
 
                 <div class="modal-body"><!--Body-->
@@ -21,6 +21,11 @@
                       @csrf
                   <input type="text" class="form-control m-1" name="name" placeholder="اسم التاجر" value="{{old('text')}}">
                   <input type="tel" class="form-control m-1" name="tel" placeholder="رقم هاتف التاجر" value="{{old('tel')}}">
+                  <select class="form-control m-1" name="caliber" value="{{old('caliber')}}">
+                    <option value=18>18</option>
+                    <option value=21>21</option>
+                    <option value=24>24</option>
+                  </select>
                 </div>
 
                 <div class="modal-footer m-auto"><!--Footer-->
@@ -40,12 +45,14 @@
     <thead class="text-center">
       <th>اسم التاجر</th>
       <th>رقم الهاتف</th> 
+      <th>العيار</th> 
     </thead>
       <tbody id="productsTable" class="text-center">
       @foreach ($dealers as $dealer)
         <tr>
           <td>{{$dealer->name}}</td>
           <td>{{$dealer->tel}}</td>
+          <td>{{$dealer->caliber}}</td>
           <td>
             <a href="{!!route('display.dealer',$dealer->id)!!}"class="btn btn-success btn-sm" >عرض</a>
             <button type="button"  class="btn btn-primary btn-sm" data-toggle="modal" data-target="#update{{$dealer->id}}">تعديل</button>
@@ -66,6 +73,21 @@
                       <input type="hidden" name="dealer_id" value="{{$dealer->id}}">
                       <input type="text" class="form-control m-1" name="name" placeholder="اسم التاجر" value="{{$dealer->name}}">
                       <input type="tel" class="form-control m-1" name="tel" placeholder="رقم هاتف التاجر" value="{{$dealer->tel}}">
+                      <select class="form-control m-1" name="caliber" value="{{old('caliber')}}">
+                        @if ($dealer->caliber == 18)  
+                          <option value=18 selected >18</option>
+                          <option value=21>21</option>
+                          <option value=24>24</option>
+                        @elseif($dealer->caliber == 21)
+                          <option value=18>18</option>
+                          <option value=21>21</option>
+                          <option value=24>24</option>
+                        @elseif($dealer->caliber == 24)
+                          <option value=18>18</option>
+                          <option value=21>21</option>
+                          <option value=24>24</option>
+                        @endif
+                      </select>  
                   </div>
 
                   <div class="modal-footer m-auto"><!--Footer-->

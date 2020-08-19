@@ -22,21 +22,21 @@
             <label>وزن القطعة</label>
               <input type="number" class="form-control" step=".001" name="weight"placeholder="وزن الكمية " value="{{ old('weight') }}" required>
         </div>
-      <div class="form-group">
+      {{-- <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> عيار الكمية</label>
         <select class="form-control" name="caliber">
                 <option value=18>18</option>
                 <option value=21>21</option>
                 <option value=24>24</option>
         </select>
-      </div>
+      </div> --}}
       <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> الأجرة</label>
         <input type="number" class="form-control" step=".001" name="price"placeholder="الأجرة " value="{{ old('price') }}"required>
       </div>
-      <div class="form-group">
+      {{-- <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> وصف الكمية</label><input type="text" class="form-control" name="typetitle"placeholder="وصف الكمية" value="{{ old('typetitle') }}" required>
-      </div>
+      </div> --}}
       <div class="form-group">
         <button type="submit" style="width:100%"class="btn btn-primary"><i class="fas fa-plus"></i> تسجيل الكمية الجديدة </button>
       </div>

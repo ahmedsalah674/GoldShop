@@ -19,17 +19,28 @@ class DealersController extends Controller
     }
     public function storeQuantity(Request $request)
     {
-       $quentity= Dealer_Quentity::create([
-            'weight'=>$request->weight,
-            'price'=>$request->price,
-            'typetitle'=>$request->typetitle,
-            'caliber'=>$request->caliber,
-            'dealer_id'=>$request->dealer_id,
-        ]);
-        if($quentity)
-            return redirect()->route('display.dealer',$request->dealer_id)->with('message','تم تسجيل الكمية');   
+        if($request->dealer_id)
+        {  
+            $dealer=Dealer::find($request->dealer_id);
+            if($dealer)
+            {
+                $quentity= Dealer_Quentity::create([
+                    'weight'=>$request->weight,
+                    'price'=>$request->price,
+                    // 'typetitle'=>$request->typetitle,
+                    // 'caliber'=>$request->caliber,
+                    'dealer_id'=>$request->dealer_id,
+                ]);
+                if($quentity)
+                    return redirect()->route('display.dealer',$request->dealer_id)->with('message','تم تسجيل الكمية');   
+                else
+                    return redirect()->route('display.dealer',$request->dealer_id)->with('error','لم يتم تسجيل الكمية يرجي المحاولة مرة اخرى');
+            }
+            else
+                return redirect()->back()->with('error','لم يتم تسجيل الكمية يرجي المحاولة مرة اخرى');
+        }
         else
-            return redirect()->route('display.dealer',$request->dealer_id)->with('error','لم يتم تسجيل الكمية يرجي المحاولة مرة اخرى');
+            return redirect()->back()->with('error','لم يتم اختيار اي تاجر');
     }
     public function allDealers()
     {
@@ -38,9 +49,11 @@ class DealersController extends Controller
     }
      public function storeDealer(Request $request)
     {
+        // return $request;
         $dealer=Dealer::create([
             'name'=>$request->name,
             'tel'=>$request->tel,
+            'caliber'=>$request->caliber,
             ]);
         if($dealer)
             return redirect()->back()->with('message','تم تسجيل التاجر');
