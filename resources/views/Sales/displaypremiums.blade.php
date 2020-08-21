@@ -18,6 +18,7 @@
       <th>نوع القطعة</th>
       <th>نوع العملية</th>
       <th>التاريخ</th>
+      <th>الوقت</th>
     </thead>
       <tbody id="productsTable" class="text-center">
       @foreach ($sales as $sale)
@@ -36,7 +37,8 @@
             <td>{{number_format($sale->price)}} جنيه</td>
             <td>{{$sale->typetitle}}</td>
             <td>قسط</td>
-            <td>{{$sale->created_at}}</td>
+            <td>{{$sale->created_at->format('Y-m-d')}}</td>
+            <td>{{$sale->created_at->format('h:i')}}</td>
             <td>
              <a href="{!!route('display.sales',$sale->id)!!}"class="btn btn-success btn-sm">عرض</a>
              <a href="{!!route('edit.sales', $sale->id)!!}" class="btn btn-primary btn-sm">تعديل</button>

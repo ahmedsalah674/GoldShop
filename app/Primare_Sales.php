@@ -12,7 +12,7 @@ class Primare_Sales extends Model
    ];
    public function sale()
     { 
-        return $this->belongsTo('App\Dealing');
+        return $this->belongsTo('App\Dealing','dealing_id');
     }
 
 }

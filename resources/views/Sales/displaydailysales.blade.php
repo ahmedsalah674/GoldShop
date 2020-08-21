@@ -65,23 +65,23 @@
 @endsection
 @section('css')
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
-<style>
-  [type="date"]::-webkit-calendar-picker-indicator {
-    display: none;}
-</style>
+  <style>
+    [type="date"]::-webkit-calendar-picker-indicator {
+      display: none;}
+  </style>
 @endsection
  @section('js')
- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
   <script>$( ".datepicker" ).datepicker({format: 'yyyy-mm-dd',});</script>  
-<script>
-  $(document).ready(function(){
-    $("#productsTable").on("keyup", function() {
-      var value = $(this).val().toLowerCase();
-      $("#productsTable tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  <script>
+    $(document).ready(function(){
+      $("#productsTable").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#productsTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
       });
     });
-  });
   </script>
   <script>
     $('#datepicker').on('change',function(){

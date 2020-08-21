@@ -9,6 +9,11 @@ use Carbon\Carbon;
 use App\Day;
 class BuyController extends Controller
 {
+  public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
    public function displaydaily(Request $request)
    {
       $date=$request->date;

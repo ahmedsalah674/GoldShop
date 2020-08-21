@@ -11,6 +11,10 @@ use App\Dealer_Quentity;
 use App\Dealer_Premium;
 class DealersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function newQuantity()
     {

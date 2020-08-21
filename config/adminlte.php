@@ -46,7 +46,7 @@ return [
     */
 
     'logo' => 'العمدة للمصوغات',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'vendor\adminlte\dist\img\AdminLTELogo.png',
     'logo_img_class' => 'brand-image-xl ',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -211,11 +211,15 @@ return [
                     'url'  => 'display/daliy/sales',
                 ],
                 [
-                    'text' => 'الاقساط',
+                    'text' => 'الاقساط تم تسديدها اليومة',
+                    'icon' => 'far fa-handshake ',
+                    'url'=> '/premiums/daily',
+                ],
+                [
+                    'text' => 'الاقساط التي لم يتم سدادها',
                     'icon' => 'far fa-handshake ',
                     'url'=> '/premiums/page',
                 ],
-        
 
                 ['header' => 'الشراء'],
        

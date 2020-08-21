@@ -15,10 +15,11 @@ class CreateDaysTable extends Migration
     {
         Schema::create('days', function (Blueprint $table) {
             $table->id();
-            $table->decimal('sales');
-            $table->decimal('buys');
-            $table->decimal('stay');
-            $table->decimal('total');
+            $table->decimal('sales')->default(0);
+            $table->decimal('buys')->default(0);
+            $table->decimal('stay')->default(0);
+            $table->decimal('primares')->default(0);
+            $table->decimal('total')->default(0);
             $table->timestamps();
         });
     }

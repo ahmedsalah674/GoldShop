@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\clearCommand::class
     ];
 
     /**
@@ -24,9 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('clear:projectCache')->everyMinute();
     }
-
     /**
      * Register the commands for the application.
      *

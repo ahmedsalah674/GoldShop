@@ -27,7 +27,9 @@
                         <tr class="text-center ">
                             <td>المتبقى</td>
                             <td> + </td>
-                            <td>البيع اليومى</td>
+                            <td>الشراء اليومى</td>
+                            <td> + </td>
+                            <td>اقساط تم تسديدها اليوم</td>
                             <td> - </td>
                             <td>الشراء اليومى</td>
                             <td> = </td>
@@ -35,16 +37,18 @@
                         </tr>
                         
                         <tr class="text-center "> 
-                            <td>{{number_format($day->stay)}}</td>
+                            <td>{{number_format($day->stay,2)}}</td>
                             <td>+</td>
-                            <td>{{number_format($day->sales)}}</td>
+                            <td>{{number_format($day->sales,2)}}</td>
+                            <td>+</td>
+                            <td>{{number_format($day->primares,2)}}</td>
                             <td>-</td>
-                            <td>{{number_format($day->buys)}}</td> 
+                            <td>{{number_format($day->buys,2)}}</td> 
                             <td> = </td>
                             @if ($day->total < 0)
-                                <td><b>{{number_format($day->total * -1)}}- جنيه</b></td>
+                                <td><b>{{number_format($day->total * -1 ,2)}}- جنيه</b></td>
                             @else
-                                <td><b>{{number_format($day->total)}} جنيه</b></td>
+                                <td><b>{{number_format($day->total,2)}} جنيه</b></td>
                             @endif
                         </tr>
                     </table>

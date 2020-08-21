@@ -41,17 +41,7 @@ class HomeController extends Controller
         $day=Day::whereDate('created_at',$now)->first();
         // return $day;
         if(!$day)
-        {
-            $day=Day::create([
-                'day' => $now,
-                'sales'=>0,
-                'buys'=>0,
-                'stay'=>0,
-                'total'=>0,
-            ]);}
-            // $days=Day::all();
-            // // foreach($days as $d)
-            // //   if($d->created_at->diffInYear($now))
+            $day=Day::create([ ]);
         return view('home',compact(['day','date']));
       }
       return view('home',compact(['day','date']));

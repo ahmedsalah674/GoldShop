@@ -11,10 +11,15 @@ use App\primare_sales;
 use Carbon\Carbon;
 class SalesController extends Controller
 {
+  public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
    public function display($id)
     {
       $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
-      if($route == 'display.daily.sales')
+      if($route == 'display.daily.sales' || $route == 'premiums.page')
       {
           $sale=Dealing::find($id);
         if($sale)
@@ -32,26 +37,46 @@ class SalesController extends Controller
    public function displaydaily(Request $request)
     {
       $date=$request->date;
-    if ($request->date)
-      {
-        $sales=Dealing::where('role',0)->whereDate('created_at', $date)->paginate(10);
-        $day=Day::whereDate('created_at',$date)->first(); 
-        if(!$day)
-          return redirect()->back()->with('error','لم يتم استعمال الجهاز في ذلك اليوم مطلقاً');
-      }   
-    else
-      {
-        $date=Carbon::now()->format('Y-m-d');
-        $sales=Dealing::where('role',0)->whereDate('created_at',$date)->paginate(10);
-        $day=Day::whereDate('created_at',$date)->first();
-      }
-      return view('Sales.displaydailysales',compact(['sales','day','date']));
+      if ($request->date)
+        {
+          $sales=Dealing::where('role',0)->whereDate('created_at', $date)->paginate(10);
+          $day=Day::whereDate('created_at',$date)->first(); 
+          if(!$day)
+            return redirect()->back()->with('error','لم يتم استعمال الجهاز في ذلك اليوم مطلقاً');
+        }   
+      else
+        {
+          $date=Carbon::now()->format('Y-m-d');
+          $sales=Dealing::where('role',0)->whereDate('created_at',$date)->paginate(10);
+          $day=Day::whereDate('created_at',$date)->first();
+        }
+        return view('Sales.displaydailysales',compact(['sales','day','date']));
     }
 
     public function allpremiumspage()
     {
       $sales=Dealing::where('type',1)->where('role',0)->where('finsh','0')->paginate(10);
       return view('Sales.displaypremiums',compact('sales'));
+    }
+    public function dailyPremiums(Request $request)
+    {
+      $date=$request->date;
+      // return $date; 
+      if ($date)
+        {
+          $day=Day::whereDate('created_at',$date)->first(); 
+          if(!$day)
+            return redirect()->back()->with('error','لم يتم استعمال الجهاز في ذلك اليوم مطلقاً');
+          $Premiums=Primare_Sales::whereDate('created_at', $date)->paginate(10);
+        }   
+      else
+        {
+          $date=Carbon::now()->format('Y-m-d');
+          $Premiums=Primare_Sales::whereDate('created_at',$date)->paginate(10);
+          $day=Day::whereDate('created_at',$date)->first();
+        }
+        // dd($Premiums,$day,$date);
+        return view('Sales.daliyPrimuams',compact(['Premiums','day','date']));
     }
     public function salesform()
     {
@@ -126,7 +151,7 @@ class SalesController extends Controller
         return redirect()->route('home')->with('error','حدث خطأ اثناء التسجيل يرجي المحاولة مرة اخري');
       else 
       {
-       $day->sales+=$request->primare;
+       $day->primares+=$request->primare;
        $day->total+=$request->primare;
        $day->update();
       }
