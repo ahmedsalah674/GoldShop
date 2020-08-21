@@ -121,7 +121,11 @@ class DealersController extends Controller
     public function storePremiums(Request $request)
     {
         $dealer=Dealer::find($request->dealer_id);
-        if($dealer)
+        $date=\Carbon\Carbon::now()->format('Y-m-d');
+        $day=Day::whereDate('created_at',$date)->first();
+        if(!$day)
+            return redirect()->route('home')->with('error','لم يتم تسجيل العملية يرجي المحاولة مرة اخري');
+        elseif($dealer)
         {
             if(!$request->premium_price && !$request->premium_gold)
                 return redirect()->back()->with('error','لم يتم تسجيل القسط لعدم وجود اي بيانات');
@@ -129,6 +133,8 @@ class DealersController extends Controller
                 return redirect()->back()->with('error','لا يمكن ان يكون مبلغ القسط اكبر من المبلغ المتبقي');
             elseif(($dealer->quantity->sum('weight') - $dealer->Premiums->sum('premium_gold')) < $request->premium_gold)
                 return redirect()->back()->with('error','لا يمكن ان يكون وزن القسط اكبر من الوزن المتبقي');
+            elseif($request->premium_price > $day->total)
+                return redirect()->back()->with('error','لا يوجد المبلغ الكافي لأتمام العملية');
             else
             {
                 $Premium= Dealer_Premium::create([
@@ -137,7 +143,12 @@ class DealersController extends Controller
                     'premium_gold'=>$request->premium_gold,
                 ]);  
                 if($Premium)
+                {
+                    $day->dealers+=$request->premium_price;
+                    $day->total-=$request->premium_price;
+                    $day->update();
                     return redirect()->route('display.dealer',$dealer->id)->with('message','تم تسجبل القسط'); 
+                }
                 else
                     return redirect()->back()->with('error','حدث خطأ اثناء عملية التسجيل'); 
                     

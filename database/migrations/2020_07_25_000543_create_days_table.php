@@ -20,6 +20,7 @@ class CreateDaysTable extends Migration
             $table->decimal('stay')->default(0);
             $table->decimal('primares')->default(0);
             $table->decimal('total')->default(0);
+            $table->decimal('dealers')->default(0);
             $table->timestamps();
         });
     }

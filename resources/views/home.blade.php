@@ -7,7 +7,7 @@
             <div class="card  ">
                 
                 <div class="card-header bg-primary rounded text-center">
-                        <b>ايراد اليوم = المتبقي + البيع اليومى - الشراءاليومى</b>
+                        <b>ايراد اليوم = المتبقي + البيع اليومى + اقساط تم تسديدها اليوم - الشراءاليومى - أجر للتجار</b>
                 </div>
 
                 <div class="text-center car-title mt-2">
@@ -27,11 +27,13 @@
                         <tr class="text-center ">
                             <td>المتبقى</td>
                             <td> + </td>
-                            <td>الشراء اليومى</td>
+                            <td>البيع اليومى</td>
                             <td> + </td>
                             <td>اقساط تم تسديدها اليوم</td>
                             <td> - </td>
                             <td>الشراء اليومى</td>
+                            <td> - </td>
+                            <td>أجر للتجار</td>
                             <td> = </td>
                             <td>المجموع</td>
                         </tr>
@@ -44,6 +46,8 @@
                             <td>{{number_format($day->primares,2)}}</td>
                             <td>-</td>
                             <td>{{number_format($day->buys,2)}}</td> 
+                            <td>-</td>
+                            <td>{{number_format($day->dealers,2)}}</td> 
                             <td> = </td>
                             @if ($day->total < 0)
                                 <td><b>{{number_format($day->total * -1 ,2)}}- جنيه</b></td>
@@ -78,14 +82,14 @@
                         <form action="{!!route('update.stay')!!}" method="POST">
                             @csrf
                             <input type="number" class="form-control" placeholder="قم بأدخال القمية المراد تسجيلها" step=".01" name="stay">
-                      </div>
-
+                            
                       <div class="modal-footer m-auto"><!--Footer-->
                             <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i></button>
-                      </div>
+                        </div>
                         </form> 
                     </div>
-                  </div>
+                </div>
+            </div>
             </div>
         @else
             <div class="text-center">
