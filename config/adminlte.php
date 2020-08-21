@@ -46,7 +46,7 @@ return [
     */
 
     'logo' => 'العمدة للمصوغات',
-    'logo_img' => 'vendor\adminlte\dist\img\AdminLTELogo.png',
+    'logo_img' => 'vendor\adminlte\dist\img\elomda.jpg',
     'logo_img_class' => 'brand-image-xl ',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -157,10 +157,10 @@ return [
 
     'register_url' => null,
 
-    'password_reset_url' => 'password/reset',
+    'password_reset_url' => null,
 
-    'password_email_url' => 'password/email',
-
+    'password_email_url' => null,
+    
     /*
     |--------------------------------------------------------------------------
     | Laravel Mix
