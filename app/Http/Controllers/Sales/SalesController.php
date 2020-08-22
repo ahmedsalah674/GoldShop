@@ -106,7 +106,7 @@ class SalesController extends Controller
                 $day->total+=$request->price;
                 $day->update();
             } 
-          return redirect()->back()->with('message','تم تسجيل العملية ');
+          return redirect()->route('display.daily.sales')->with('message','تم تسجيل العملية ');
         }
       else
         return redirect()->route('home')->with('error','حدث خطأ أثناء عملية التسجليل يرجي المحاولة مرة اخري');
@@ -166,5 +166,47 @@ class SalesController extends Controller
       }
       return redirect()->back()->with('message','لقد تم اضافة القسط ');
     }
-    
+    public function destroy(Request $request)
+    {
+      $sale=Dealing::find($request->id);
+      if($sale)
+         {
+           $day=Day::whereDate('created_at',$sale->created_at->format('Y-m-d'))->first();
+           if($day)
+           {
+             if($sale->type == 0)
+              {
+                $day->sales-=$sale->price;
+                $day->total-=$sale->price;
+                $day->update();
+                Dealing::destroy($sale->id);
+              }
+              else
+              {
+                $premiums=$sale->primare;
+                if(count($premiums))
+                {
+                  foreach($premiums as $premium)
+                  {
+                    $day=Day::whereDate('created_at',$premium->created_at->format('Y-m-d'))->first();
+                    $day->sales-=$premium->primare_sale;
+                    $day->total-=$premium->primare_sale;
+                    $day->update();
+                    Primare_Sales::destroy($premium->id);
+                  }
+                }
+                $day=Day::whereDate('created_at',$sale->created_at->format('Y-m-d'))->first();
+                $day->primares-=$sale->price;
+                $day->total+=$sale->price;
+                $day->update();
+                Dealing::destroy($sale->id);
+              }
+            }  
+            else
+            {
+               return redirect()->back()->with('error','حدث خطأ');
+            }
+            return redirect()->back()->with('message','تمت العملية بنجاح');
+         }
+    }
 }

@@ -78,11 +78,10 @@ class BuyController extends Controller
     {
       
       $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
-      return $route;
       if($route == 'display.buy' || $route == 'display.daily.buy' )
       {  
         $buy=Dealing::find($id);
-        if(!$buy)
+        if($buy)
           return view('Buys.editbuy',compact('buy'));
         else
           return redirect()->back()->with('error','هناك خطأ أثناء عملية العرض');
@@ -99,9 +98,18 @@ class BuyController extends Controller
            $day=Day::whereDate('created_at',$buys->created_at->format('Y-m-d'))->first();
            if($day)
            {
-              $day->buys-=$buys->price;
-              $day->total+=$buys->price;
-              $day->buys+=$request->price;
+             if($day->buys<0)
+                $day->buys+=$buys->price; //-10 + 10 = 0
+             else
+                $day->buys-=$buys->price; //10 - 10 = 0 //delete old buy
+
+              $day->total+=$buys->price; //-10 + 10 = 0 //delete from old total
+           
+              if($day->buys<0)
+                $day->buys-=$request->price;
+              else
+                $day->buys+=$request->price;
+
               $day->total-=$request->price;
               $day->update();
             }  
@@ -115,6 +123,26 @@ class BuyController extends Controller
       return redirect()->route('display.daily.buy')->with('message','لقد تم تعديل العملية');
 
     }
-    
+    public function destroy(Request $request)
+    {
+      $buy=Dealing::find($request->id);
+      if($buy)
+         {
+           $day=Day::whereDate('created_at',$buy->created_at->format('Y-m-d'))->first();
+           if($day)
+           {
+                $day->buys-=$buy->price;
+                $day->total+=$buy->price;
+                $day->update();
+                Dealing::destroy($buy->id);
+                return redirect()->back()->with('message','تمت العملية بنجاح');
+
+            }  
+            else
+            {
+               return redirect()->back()->with('error','حدث خطأ');
+            }
+         }
+    }
     
 }

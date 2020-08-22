@@ -54,6 +54,59 @@
            
             <a href="{!!route('edit.sales',$sale->id)!!}" class="btn btn-primary btn-sm">تعديل</a>
           @endif
+          <button type="button"  class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalPush{{$sale->id}}">مسح</button>
+                    <!--Modal: modalPush-->
+          <div id="modalPush{{$sale->id}}" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+              <div class="modal-content">
+                <div class="modal-header">				
+                  <h4 class="modal-title">هل انت متأكد؟</h4>	
+                  <button type="button"  class="btn " data-toggle="modal" data-target="#modalPush{{$sale->id}}"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                  {{-- <i class="far fa-times-circle"></i> --}}
+                  <i class="far fa-times-circle fa-4x animated rotateIn mb-4 text-danger "></i>
+                  <p>ان كنت متأكد اضغط علي مسح</p>
+                </div>
+                <div class="modal-footer  d-flex justify-content-center">
+                <form action="{!!route('destroy.sales')!!}" method="POST" class="d-inline">
+                  @csrf
+                  <input type="hidden" name="id" value="{{$sale->id}}">
+                  <button type="submit" class="btn btn-danger">مسح</button>
+                  <button type="button" class="btn btn-info" data-dismiss="modal">الغاء</button>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>     
+          
+            {{-- <button type="button"  class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalPush{{$sale->id}}">مسح</button>
+                    <!--Modal: modalPush-->
+              <div class="modal fade" id="modalPush{{$sale->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="true" >
+                 <div class="modal-dialog modal-notify modal-info" role="document" >
+                    <!--Content-->
+                    <div class="modal-content text-center" >
+                      <!--Header-->
+                      <div class="modal-header bg-danger" >
+                        <button type="button"  class="btn text-white" data-toggle="modal" data-target="#modalPush{{$sale->id}}"><i class="fas fa-times"></i></button>
+                      </div>
+                        <!--Body-->
+                      <div class="modal-body">
+                        <i class="fas fa-bell fa-4x animated rotateIn mb-4 "></i>
+                        <p>هل انت متأكد من انك تريد المسح؟!</p>
+                      </div>
+                        <!--Footer-->
+                      <div class="modal-footer m-auto">
+                        <form action="{!!route('destroy.sales')!!}" method="POST">
+                          @csrf
+                          <input type="hidden" name="id" value="{{$sale->id}}">
+                          <button type="submit" class="btn btn-danger "><i class="fas fa-check "></i></button>
+                        </form>      
+                      </div>
+                    </div>
+                        <!--/.Content-->
+                  </div>
+              </div>    --}}
           </td>
         </tr>
       @endforeach

@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'العمدة للمصوغات',
+    'title' => 'العُمدة للمَصُوغات',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => 'العمدة للمصوغات',
+    'logo' => 'العُمدة للمَصُوغات',
     'logo_img' => 'vendor\adminlte\dist\img\elomda.jpg',
     'logo_img_class' => 'brand-image-xl ',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'العمدة للمصوغات',
+    'logo_img_alt' => 'العُمدة للمَصُوغات',
 
     /*
     |--------------------------------------------------------------------------
@@ -212,9 +212,10 @@ return [
                 ],
                 [
                     'text' => 'الاقساط تم تسديدها اليومة',
-                    'icon' => 'far fa-handshake ',
+                    'icon' => 'fas fa-sitemap',
                     'url'=> '/premiums/daily',
                 ],
+                // fas fa-fw fa-check
                 [
                     'text' => 'الاقساط التي لم يتم سدادها',
                     'icon' => 'far fa-handshake ',
@@ -225,12 +226,12 @@ return [
        
                 [
                     'text' => 'عملية شراء جديدة',
-                    'icon'=>'fas fa-fw fa-exclamation',
+                    'icon'=>'fas fa-fw fa-plus',
                     'url'=> 'buy/form',
                 ],
                 [
                     'text' => 'مشتريات يومية',
-                    'icon' => 'fas fa-fw fa-check',
+                    'icon' => 'far fa-clock',
                     'url'=> 'display/daily/buy',
                 ],
             
@@ -238,7 +239,7 @@ return [
                 ['header' => 'التجار'],
                 [
                     'text' => 'كمية جديدة',
-                    'icon' => 'fas fa-fw fa-check',
+                    'icon' => 'fas fa-fw fa-plus',
                     'url'=> '/dealers/buy',
                 ], 
                 [
@@ -246,7 +247,7 @@ return [
                     'icon' => 'fas fa-fw fa-users my-2',
                     'url'=> '/dealers/all',
                 ],
-           
+                
 
         
     ],

@@ -43,7 +43,7 @@
       </div>
       <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> سعر القطعة</label>
-      <input type="number" class="form-control" step=".001" name="price"placeholder="سعر القطعة المباعة" value="{{number_format($sale->price)}}"required>
+      <input type="number" class="form-control" step=".001" name="price"placeholder="سعر القطعة المباعة" value="{{$sale->price}}"required>
       </div>
       <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> نوع القطعة</label><input type="text" class="form-control" name="typetitle"placeholder="نوع القطعة المباعة" value="{{$sale->typetitle}}" required>

@@ -44,6 +44,30 @@
           <td>
           <a href="{!!route('display.buy',$buy->id)!!}" class="btn btn-success btn-sm">عرض</a>
           <a href="{!!route('edit.buy',$buy->id)!!}" type="submit" class="btn btn-primary btn-sm">تعديل</a>
+           <button type="button"  class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalPush{{$buy->id}}">مسح</button>
+                    <!--Modal: modalPush-->
+          <div id="modalPush{{$buy->id}}" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+              <div class="modal-content">
+                <div class="modal-header">				
+                  <h4 class="modal-title">هل انت متأكد؟</h4>	
+                  <button type="button"  class="btn " data-toggle="modal" data-target="#modalPush{{$buy->id}}"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                  <i class="far fa-times-circle fa-4x animated rotateIn mb-4 text-danger "></i>
+                  <p>ان كنت متأكد اضغط علي مسح</p>
+                </div>
+                <div class="modal-footer  d-flex justify-content-center">
+                  <form action="{!!route('destroy.buy')!!}" method="POST" class="d-inline">
+                    @csrf
+                    <input type="hidden" name="id" value="{{$buy->id}}">
+                    <button type="submit" class="btn btn-danger">مسح</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">الغاء</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
           </td>
         </tr>
       @endforeach

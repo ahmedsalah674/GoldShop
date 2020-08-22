@@ -27,6 +27,7 @@ Route::get('/display/daily/buy','Buy\BuyController@displaydaily')->name('display
 Route::get('/edit/buy/{id}','Buy\BuyController@editbuy')->name('edit.buy');
 Route::post('/update/buy','Buy\BuyController@updatebuy')->name('update.buy');
 Route::get('/display/buy/{id}','Buy\BuyController@display')->name('display.buy');
+Route::post('/destroy/buys','Buy\BuyController@destroy')->name('destroy.buy');
 //Sales
 Route::get('/sales/form','Sales\SalesController@salesform')->name('sales.form');
 Route::post('/sales/form','Sales\SalesController@storesales')->name('store.sales');
@@ -34,6 +35,7 @@ Route::get('/edit/sales/{id}','Sales\SalesController@editsales')->name('edit.sal
 Route::post('/update/sales','Sales\SalesController@updatesales')->name('update.sales');
 Route::get('/display/daliy/sales','Sales\SalesController@displaydaily')->name('display.daily.sales');
 Route::get('/display/sales/{id}','Sales\SalesController@display')->name('display.sales');
+Route::post('/destroy/sales','Sales\SalesController@destroy')->name('destroy.sales');
 //dealers
 Route::get('/dealers/buy','Dealers\DealersController@newQuantity')->name('new.quantity');
 Route::post('/dealers/buy','Dealers\DealersController@storeQuantity')->name('store.quantity');
