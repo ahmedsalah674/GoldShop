@@ -78,6 +78,10 @@ class BuyController extends Controller
     {
       
       $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+<<<<<<< HEAD
+=======
+      //return $route;
+>>>>>>> 2e5ecf4eee3daa4154cc8a914968f3732dc4dbf3
       if($route == 'display.buy' || $route == 'display.daily.buy' )
       {  
         $buy=Dealing::find($id);
