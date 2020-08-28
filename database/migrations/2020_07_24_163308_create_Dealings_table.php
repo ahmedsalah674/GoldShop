@@ -16,10 +16,10 @@ class CreateDealingsTable extends Migration
         Schema::create('Dealings', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('tel');
-            $table->decimal('weight');
+            // $table->string('tel');
+            $table->double('weight');
             $table->integer('caliber');
-            $table->decimal('price');
+            $table->double('price');
             $table->integer('type');
             $table->string('typetitle');
             $table->integer('role');

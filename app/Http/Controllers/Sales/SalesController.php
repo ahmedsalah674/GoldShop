@@ -19,7 +19,7 @@ class SalesController extends Controller
    public function display($id)
     {
       $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
-      if($route == 'display.daily.sales' || $route == 'premiums.page')
+      if($route == 'display.daily.sales' || $route == 'premiums.page' || $route == 'display.sales')
       {
           $sale=Dealing::find($id);
         if($sale)
@@ -91,7 +91,7 @@ class SalesController extends Controller
         {
           $dealing=Dealing::create([
             'name' => $request->name,
-            'tel' => $request->tel,
+            // 'tel' => $request->tel,
             'weight' => $request->weight,
             'caliber' => $request->caliber,
             'price' => $request->price,
@@ -189,16 +189,20 @@ class SalesController extends Controller
                   foreach($premiums as $premium)
                   {
                     $day=Day::whereDate('created_at',$premium->created_at->format('Y-m-d'))->first();
-                    $day->sales-=$premium->primare_sale;
+                    $day->primares-=$premium->primare_sale;
                     $day->total-=$premium->primare_sale;
                     $day->update();
                     Primare_Sales::destroy($premium->id);
                   }
                 }
-                $day=Day::whereDate('created_at',$sale->created_at->format('Y-m-d'))->first();
-                $day->primares-=$sale->price;
-                $day->total+=$sale->price;
-                $day->update();
+                // else
+                // {
+                //   $day=Day::whereDate('created_at',$sale->created_at->format('Y-m-d'))->first();
+                //   $day->primares-=$sale->price;
+                //   $day->primares-=$sale->price;
+                //   $day->total+=$sale->price;
+                //   $day->update();
+                // }
                 Dealing::destroy($sale->id);
               }
             }  
@@ -208,5 +212,73 @@ class SalesController extends Controller
             }
             return redirect()->back()->with('message','تمت العملية بنجاح');
          }
+    }
+    public function destoyPremiums(Request $request)
+    {
+      // return $request;
+      $primare=Primare_Sales::find($request->id);
+      if($primare)
+      {
+        $day=Day::whereDate('created_at',$primare->created_at->format('Y-m-d'))->first();
+        if($day && $day->total >= $primare->primare_sale)
+        {
+          $day->primares-=$primare->primare_sale;
+          $day->total-=$primare->primare_sale;
+          $day->update(); 
+          Primare_Sales::destroy($request->id);
+          return redirect()->back()->with('message','تم حذف القسط بنجاح');
+        }  
+        return redirect()->route('home')->with('error','حدث خطأ اثناء عملية المسح او لا يوجد مال كافي يرجي المحاولة مرة اخري');
+      }
+      else 
+        return redirect()->route('home')->with('error','حدث خطأ'); 
+    }
+    public function updatePremiums(Request $request)
+    {
+      $primare=Primare_Sales::find($request->id);
+      if($primare)
+      {
+        $sale=$primare->sale;
+        $day=Day::whereDate('created_at',$primare->created_at->format('Y-m-d'))->first();
+        if($primare->primare_sale > $request->primare_sale && $day->total >= ($primare->primare_sale - $request->primare_sale))
+        {
+          $day->primares-=$primare->primare_sale;
+          $day->total-=$primare->primare_sale;
+          $day->primares+= $request->primare_sale;
+          $day->total+=$request->primare_sale;
+          $day->update();    
+          $request = $request->except('__token');
+          $primare->update($request);
+          if($sale->sum('primare_sale') == $sale->price)
+            {
+              $sale->finish =1;
+              $sale->update();
+            }
+          return redirect()->back()->with('message','لقد تم تعديل القسط');
+        }
+        elseif($primare->primare_sale < $request->primare_sale)
+        {
+          
+          $day->primares-=$primare->primare_sale ;
+          $day->total+=$primare->primare_sale;
+          $day->primares+=$request->primare_sale;
+          $day->total+=$request->primare_sale;
+          $day->update();    
+          $request = $request->except('__token');
+          $primare->update($request);
+          return redirect()->back()->with('message','لقد تم تعديل القسط');
+          if($sale->sum('primare_sale') == $sale->price)
+          {
+            $sale->finish =1;
+            $sale->update();
+          }
+        }
+        elseif($primare->primare_sale == $request->primare_sale)
+         return redirect()->back();
+        else
+          return redirect()->back()->with('error','لا يوجد المال الكافي لتعديل المبلغ');
+      }
+      else 
+        return redirect()->route('home')->with('error','حدث خطأ'); 
     }
 }

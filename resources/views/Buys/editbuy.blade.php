@@ -12,11 +12,11 @@
         <label>اسم العميل</label>
         <input type="text" class="form-control" name="name"placeholder=" اسم العميل" value="{{$buy->name}}" required>
       </div>
-      <div class="form-group">
+      {{-- <div class="form-group">
         <i class="fas fa-pencil-alt text-info"></i>
         <label>رقم الهاتف للعميل</label>
         <input type="tel" class="form-control" name="tel"placeholder=" رقم هاتف العميل" value="{{$buy->tel}}" required>
-      </div>
+      </div> --}}
         <div class="form-group">
             <i class="fas fa-pencil-alt text-info"></i>
             <label>وزن القطعة</label>

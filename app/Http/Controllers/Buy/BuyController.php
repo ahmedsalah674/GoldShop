@@ -39,26 +39,27 @@ class BuyController extends Controller
     public function storebuy(Request $request)
     {
       $now=\Carbon\Carbon::now()->format('Y-m-d');
-      Dealing::create([
-         'name' => $request->name,
-         'tel' => $request->tel,
-         'weight' => $request->weight,
-         'caliber' => $request->caliber,
-         'price' => $request->price,
-         'type' => 0,
-         'typetitle' => $request->typetitle,
-         'role' => 1,
-         'finsh'=>1,
-       ]);
-       $day=Day::whereDate('created_at',$now)->first();
-       if($day)
-       {
+      $day=Day::whereDate('created_at',$now)->first();
+      if($day && ($day->total > $request->price))
+      {
+        Dealing::create([
+          'name' => $request->name,
+          //  'tel' => $request->tel,
+          'weight' => $request->weight,
+          'caliber' => $request->caliber,
+          'price' => $request->price,
+          'type' => 0,
+          'typetitle' => $request->typetitle,
+          'role' => 1,
+          'finsh'=>1,
+        ]);
+        
           $day->buys+=$request->price;
           $day->total-=$request->price;
           $day->update();
           return redirect()->route('display.daily.buy')->with('message','تم تسجيل العملية');
        }
-        return redirect()->route('home')->with('error','حدث خطأ اثناء عملية التسجبل يرجى المحاولة مرة اخرى');
+        return redirect()->route('home')->with('error','حدث خطأ اثناء عملية التسجبل او لا يوجد مال كافي يرجى المحاولة مرة اخرى');
     }
     public function display($id)
     {
@@ -78,10 +79,6 @@ class BuyController extends Controller
     {
       
       $route=app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
-<<<<<<< HEAD
-=======
-      //return $route;
->>>>>>> 2e5ecf4eee3daa4154cc8a914968f3732dc4dbf3
       if($route == 'display.buy' || $route == 'display.daily.buy' )
       {  
         $buy=Dealing::find($id);

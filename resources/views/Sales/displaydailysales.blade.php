@@ -18,7 +18,7 @@
   <table class="table table-hover ">
     <thead class="text-center">
       <th>اسم العميل</th>
-      <th>رقم الهاتف</th>
+      {{-- <th>رقم الهاتف</th> --}}
       <th>الوزن</th>
       <th>العيار</th>
       <th>السعر</th>
@@ -31,7 +31,7 @@
       @foreach ($sales as $sale)
         <tr>
           <td>{{$sale->name}}</td>
-          <td>{{$sale->tel}}</td>
+          {{-- <td>{{$sale->tel}}</td> --}}
           @if ($sale->weight >1000)
             <td>{{round(($sale->weight /1000),4)}} كيلو</td>            
           @else

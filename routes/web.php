@@ -55,6 +55,8 @@ Route::post('/update/stay','HomeController@updatestay')->name('update.stay');
 Route::get('/premiums/page','Sales\SalesController@allpremiumspage')->name('premiums.page');
 Route::post('/premiums/add','Sales\SalesController@addPraimare')->name('premare.add');
 Route::get('/premiums/daily','Sales\SalesController@dailyPremiums')->name('Premiums.daily');
+Route::post('/premiums/destroy','Sales\SalesController@destoyPremiums')->name('Premiums.destroy');
+Route::post('/premiums/update','Sales\SalesController@updatePremiums')->name('Premiums.update');
 
 
 

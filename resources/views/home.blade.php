@@ -81,7 +81,7 @@
                         <i class="fas fa-edit fa-4x animated rotateIn mb-4  "style="color:#33b5e5"></i>
                         <form action="{!!route('update.stay')!!}" method="POST">
                             @csrf
-                            <input type="number" class="form-control" placeholder="قم بأدخال القمية المراد تسجيلها" step=".01" name="stay">
+                            <input type="number" class="form-control" placeholder="قم بأدخال القمية المراد تسجيلها" step=".01" name="stay" min="0" >
                             
                       <div class="modal-footer m-auto"><!--Footer-->
                             <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i></button>

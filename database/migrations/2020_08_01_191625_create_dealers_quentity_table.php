@@ -15,11 +15,11 @@ class CreateDealersQuentityTable extends Migration
     {
         Schema::create('dealers_quentity', function (Blueprint $table) {
             $table->id();
-            $table->decimal('weight');
-            $table->decimal('price');
+            $table->double('weight');
+            $table->double('price');
             // $table->string('typetitle');
             // $table->integer('caliber');
-            $table->integer('dealer_id');
+            $table->bigInteger('dealer_id');
             $table->timestamps();
         });
     }

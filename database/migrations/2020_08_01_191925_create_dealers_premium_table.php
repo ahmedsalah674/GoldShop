@@ -15,9 +15,9 @@ class CreateDealersPremiumTable extends Migration
     {
         Schema::create('dealers_premium', function (Blueprint $table) {
             $table->id();
-            $table->integer('dealer_id');
-            $table->decimal('premium_price')->nullable();
-            $table->decimal('premium_gold')->nullable();
+            $table->bigInteger('dealer_id');
+            $table->double('premium_price')->nullable();
+            $table->double('premium_gold')->nullable();
             $table->timestamps();
         });
     }

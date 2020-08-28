@@ -10,11 +10,14 @@
     
     <tr>
       <td>اسم العميل : {{ $buy->name }}</td>
-      <td>هاتف العميل: {{$buy->tel}}</td>
+      {{-- <td>هاتف العميل: {{$buy->tel}}</td> --}}
     </tr>
     <tr>
+      @if(round(($buy->weight),4) <1000)
         <td>وزن القطعة: {{ round(($buy->weight),4) }} جرام</td>
+      @else
         <td>وزن القطعة: {{ round(($buy->weight/1000),4) }} كيلو</td>
+      @endif
         <td>سعر القطعة: {{ number_format($buy->price) }} جنيه</td>
     </tr>
     

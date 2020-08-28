@@ -15,8 +15,8 @@ class CreatePrimareSalesTable extends Migration
     {
         Schema::create('primare_sales', function (Blueprint $table) {
             $table->id();
-            $table->integer('dealing_id');
-            $table->decimal('primare_sale');
+            $table->bigInteger('dealing_id');
+            $table->double('primare_sale');
             $table->timestamps();
         });
     }

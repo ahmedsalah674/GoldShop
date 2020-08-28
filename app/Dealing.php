@@ -8,7 +8,7 @@ class Dealing extends Model
 {
     protected $table ='dealings';
     protected $fillable = [
-        'name', 'tel', 'weight','caliber','price','type','typetitle','role','day','finsh'
+        'name', 'weight','caliber','price','type','typetitle','role','day','finsh'
     ];  
     // public function getWeightAttribute($value)
     // {
