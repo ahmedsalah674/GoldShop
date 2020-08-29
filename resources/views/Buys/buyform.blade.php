@@ -32,7 +32,7 @@
       </div>
       <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> سعر القطعة</label>
-        <input type="number" class="form-control" step=".001" name="price"placeholder="سعر القطعة " value="{{ old('price') }}" min="0.01" required>
+        <input type="number" class="form-control" step=".001" name="price"placeholder="سعر القطعة " value="{{ old('price') }}" min="1" required>
       </div>
       <div class="form-group">
         <label><i class="fas fa-pencil-alt text-info"></i> نوع القطعة</label><input type="text" class="form-control" name="typetitle"placeholder="نوع القطعة " value="{{ old('typetitle') }}" required>

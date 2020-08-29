@@ -155,4 +155,21 @@ class DealersController extends Controller
             }
         }
     }
+    public function destroyQuantityDealer (Request $request)
+    {
+        return $request;
+    }
+    public function updateQuantityDealer(Request $request)
+    {
+        return $request;
+    }
+
+    public function destroyDealerPremiums (Request $request)
+    {
+        return $request;
+    }
+    public function updateDealerPremiums(Request $request)
+    {
+        return $request;
+    }
 }

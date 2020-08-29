@@ -43,10 +43,14 @@ Route::get('/dealers/all','Dealers\DealersController@allDealers')->name('all.dea
 Route::post('/dealers/new','Dealers\DealersController@storeDealer')->name('store.dealer');
 Route::get('/dealers/display/{id}','Dealers\DealersController@displayDealer')->name('display.dealer');
 Route::post('/dealers/update','Dealers\DealersController@updateDealer')->name('update.dealer');
+Route::post('/dealers/quantity/destroy','Dealers\DealersController@destroyQuantityDealer')->name('destroy.quantity.dealer');
+Route::post('/dealers/quantity/update','Dealers\DealersController@updateQuantityDealer')->name('update.quantity.dealer');
 
-//dealer quntitiy and Premium
+//dealer quntity and Premium
 Route::get('/dealers/Premiums/{id}','Dealers\DealersController@displayPremiums')->name('display.Premiums');
 Route::post('/dealers/Premiums/store','Dealers\DealersController@storePremiums')->name('store.Premiums');
+Route::post('/dealers/Premiums/destroy','Dealers\DealersController@destroyDealerPremiums')->name('destroy.dealer.Premiums');
+Route::post('/dealers/Premiums/update','Dealers\DealersController@updateDealerPremiums')->name('update.dealer.Premiums');
 
 //days
 Route::post('/update/stay','HomeController@updatestay')->name('update.stay');
